@@ -1,32 +1,24 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react';
 
-import Header from '../components/Partials/Header'
-import Body from '../components/Partials/Body'
-import Footer from '../components/Partials/Footer'
+import Header from '../components/Partials/Header';
+import Body from '../components/Partials/Body';
+import Footer from '../components/Partials/Footer';
 
-class MainPage extends Component {
+const MainPage = () => {
 
-  state = {
-    filterInput: ''
+  const [filterSetup, setFilterSetup] = useState({});
+
+  const handleFilter = obj => {
+    setFilterSetup(obj);
   }
 
-  handleFilter = (e) => {
-    this.setState (
-      {
-        filterInput: e.target.value
-      }
-    )
-  }
-
-  render() {
-    return (
-        <div className="App flex-column-center">
-            <Header onFilter={this.handleFilter} onShowModal={() => this.showModal('AddCar')}/>
-            <Body filterInput={this.state.filterInput} />
-            <Footer />
-        </div>
-    );
-  }
+  return (
+    <div className="App flex-column-center">
+        <Header onFilter={handleFilter} onShowModal={() => this.showModal('AddCar')}/>
+        <Body filterSetup={filterSetup} />
+        <Footer />
+    </div>
+  );
 }
 
 export default MainPage;

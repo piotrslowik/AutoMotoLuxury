@@ -72,7 +72,7 @@ const getImagesUrls = async images => {
     }
 }
 
-export const getOffers = async () => {
+export const getOffers = async (filterSetup) => {
     const query = `
     query {
         offers {

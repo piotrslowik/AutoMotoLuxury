@@ -29,7 +29,7 @@ const Filters = () => {
 
     const dummyObj = {
         text: 'Wszystkie',
-        id: 0,
+        id: '0',
     }
 
     const formatArray = (arr, field) => {

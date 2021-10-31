@@ -1,16 +1,18 @@
 # This is a sample project for a non-existing company selling secont-hand cars.
+I know it looks ugly right now. My goal is to make it work properly.
+App is in polish. 
 
 ## Planned user types:
 
-* Admin
+### Admin
 - CRUD operations on database (origins, makes, models, fuel types) via CMS
 - CRUD operations on offers
 
-* User (logged in)
+### User (logged in)
 - browse offers
 - add offer to favorites
 
-* User (not logged in)
+### User (not logged in)
 - browse offers
 
 ## How to run
@@ -22,6 +24,8 @@
 ## TO DO
 - logging in
 - optimalization
+- filters
+- UI with some library
 - tests
 - CI/CD
 
