@@ -43,7 +43,7 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PA
     })
 
 cloudinary.config({ 
-  cloud_name: 'auto-moto-luxury', 
-  api_key: '419514689614423', 
-  api_secret: 'zt6W8gQTeehhJVUD42gSCLqIyEc' 
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET 
 });
