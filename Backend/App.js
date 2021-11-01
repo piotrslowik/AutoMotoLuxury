@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import graphqlHttp from 'express-graphql';
+import expressGraphqlHttp from 'express-graphql';
+const { graphqlHTTP } = expressGraphqlHttp;
 import mongoose from 'mongoose';
 
 import cloudinary from 'cloudinary';
@@ -24,7 +25,7 @@ app.use((req, res, next) => {
   next();
 });
   
-app.use('/graphql', graphqlHttp({
+app.use('/graphql', graphqlHTTP({
   schema: graphqlSchema,
   rootValue: graphqlResolvers,
   graphiql: true,
