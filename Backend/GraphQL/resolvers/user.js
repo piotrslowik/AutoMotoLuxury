@@ -1,12 +1,14 @@
-const User = require('../../Models/user');
+import User from '../../Models/user.js';
 
-const { hash } = require('bcryptjs');
-const { offers, parseWithId } = require('./helpers');
+import bcryptjs from 'bcryptjs';
+const { hash}  = bcryptjs;
 
-const userResolver = {
+import { offers, parseWithId } from './helpers.js';
+
+export default {
     createUser: async args => {
         try {
-            const existingUser = await User.findOne({email: args.userInput.email});
+            const existingUser = await findOne({email: args.userInput.email});
             console.log(existingUser, args.userInput);
             if (existingUser) {
                 throw new Error('User with that e-mail address already exists');
@@ -33,8 +35,8 @@ const userResolver = {
     },
     deleteUser: async args => {
         try {
-            const user = await User.findById(args.userId);
-            await User.deleteOne({_id: args.userId});
+            const user = await findById(args.userId);
+            await deleteOne({_id: args.userId});
             return parseWithId(user);
         }
         catch (error) {
@@ -43,5 +45,3 @@ const userResolver = {
         }
     },
 }
-
-module.exports =  userResolver;

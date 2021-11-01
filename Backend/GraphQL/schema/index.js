@@ -1,6 +1,6 @@
-const { buildSchema } = require('graphql');
+import { buildSchema } from 'graphql';
 
-const graphqlSchema = buildSchema(`
+export default buildSchema(`
     type Offer {
         _id: ID!,
         make: Make!,
@@ -141,5 +141,3 @@ const graphqlSchema = buildSchema(`
         mutation: RootMutation
     }
 `)
-
-module.exports = graphqlSchema;

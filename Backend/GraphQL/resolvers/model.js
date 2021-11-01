@@ -1,8 +1,8 @@
-const Model = require('../../Models/model');
+import Model from '../../Models/model.js';
 
-const { make, parseWithId } = require('./helpers');
+import { make, parseWithId } from './helpers.js';
 
-const modelResolver = {
+export default {
     models: async args => {
         try {
             const models = await Model.find({makeId: args.makeId});
@@ -63,5 +63,3 @@ const modelResolver = {
         }
     },
 }
-
-module.exports =  modelResolver;

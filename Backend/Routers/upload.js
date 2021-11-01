@@ -1,15 +1,16 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const multer = require('multer');
+import multer from 'multer';
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single('image');
 
-const Datauri = require('datauri');
+import Datauri from 'datauri';
 const dUri = new Datauri()
-const path = require('path');
 
-const cloudinary = require('cloudinary');
+import path from 'path';
+
+import cloudinary from 'cloudinary';
 
 
 
@@ -27,4 +28,4 @@ router.post('/images',  upload, async (req, res) => {
   }
 });
   
-module.exports = router;
+export default router;

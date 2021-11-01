@@ -1,8 +1,8 @@
-const Origin = require('../../Models/origin');
+import Origin from '../../Models/origin.js';
 
-const { parseWithId } = require('./helpers');
+import { parseWithId } from './helpers.js';
 
-const originResolver = {
+export default {
     origins: async () => {
         try {
             const origins = await Origin.find();
@@ -52,5 +52,3 @@ const originResolver = {
         }
     },
 }
-
-module.exports =  originResolver;

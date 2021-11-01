@@ -1,17 +1,17 @@
-const User = require('../../Models/user');
-const Origin = require('../../Models/origin');
-const Make = require('../../Models/make');
-const Model = require('../../Models/model');
-const Offer = require('../../Models/offer');
-const Fuel = require('../../Models/fuel');
+import User from '../../Models/user.js';
+import Origin from '../../Models/origin.js';
+import Make from '../../Models/make.js';
+import Model from '../../Models/model.js';
+import Offer from '../../Models/offer.js';
+import Fuel from  '../../Models/fuel.js';
 
-const parseWithId = data => {
+export const parseWithId = data => {
     return {
         ...data._doc,
         _id: data.id,
     }
 };
-const offers = async offerIDs => {
+export const offers = async offerIDs => {
     try {
         const offers = await Offer.find({_id: {$in: offerIDs}});
         return offers.map(offer => {
@@ -26,7 +26,7 @@ const offers = async offerIDs => {
         throw error;
     }
 };
-const user = async userId => {
+export const user = async userId => {
     try {
         const user = await User.findById(userId);
         return {
@@ -39,7 +39,7 @@ const user = async userId => {
         throw error;
     }
 };
-const origin = async originId => {
+export const origin = async originId => {
     try {
         const origin = await Origin.findById(originId);
         return parseWithId(origin);
@@ -49,7 +49,7 @@ const origin = async originId => {
         throw error;
     }
 };
-const make = async makeId => {
+export const make = async makeId => {
     try {
         const make = await Make.findById(makeId);
         return {
@@ -62,7 +62,7 @@ const make = async makeId => {
         throw error;
     }
 }
-const model = async modelId => {
+export const model = async modelId => {
     try {
         const model = await Model.findById(modelId);
         return {
@@ -75,7 +75,7 @@ const model = async modelId => {
         throw error;
     }
 }
-const fuel = async fuelId => {
+export const fuel = async fuelId => {
     try {
         const fuel = await Fuel.findById(fuelId);
         return {
@@ -88,34 +88,14 @@ const fuel = async fuelId => {
     }
 }
 
-module.exports = {
-    parseOffer: offer => {
-        return { 
-            ...offer._doc,
-            _id: offer.id,
-            date: new Date(offer._doc.date).toISOString(),
-            make: make.bind(this, offer._doc.makeId),
-            model: model.bind(this, offer._doc.modelId),
-            fuel: fuel.bind(this, offer._doc.fuelId),
-            creator: user.bind(this, offer._doc.creator),
-        };
-    },
-    parseWithId: data => {
-        return parseWithId(data);
-    },
-    user: async userId => {
-        return await user(userId);
-    },
-    offers: async offerIDs => {
-        return await offers(offerIDs);
-    },
-    origin: async originId => {
-        return await origin(originId);
-    },
-    make: async makeId => {
-        return await make(makeId);
-    },
-    fuel: async fuelId => {
-        return await fuel(fuelId);
-    }
+export const parseOffer = offer => {
+    return { 
+        ...offer._doc,
+        _id: offer.id,
+        date: new Date(offer._doc.date).toISOString(),
+        make: make.bind(this, offer._doc.makeId),
+        model: model.bind(this, offer._doc.modelId),
+        fuel: fuel.bind(this, offer._doc.fuelId),
+        creator: user.bind(this, offer._doc.creator),
+    };
 }

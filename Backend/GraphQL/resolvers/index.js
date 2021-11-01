@@ -1,11 +1,11 @@
-const offersResolver = require('./offer');
-const userResolver = require('./user');
-const originResolver = require('./origin');
-const makeResolver = require('./make');
-const modelResolver = require('./model');
-const fuelResolver = require('./fuel');
+import offersResolver from './offer.js';
+import userResolver from './user.js';
+import originResolver from './origin.js';
+import makeResolver from './make.js';
+import modelResolver from './model.js';
+import fuelResolver from './fuel.js';
 
-const graphqlResolvers = {
+export default {
     ...offersResolver,
     ...userResolver,
     ...originResolver,
@@ -13,5 +13,3 @@ const graphqlResolvers = {
     ...modelResolver,
     ...fuelResolver,
 }
-
-module.exports = graphqlResolvers;

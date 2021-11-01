@@ -1,8 +1,8 @@
-const Make = require('../../Models/make');
+import Make from '../../Models/make.js';
 
-const { origin, parseWithId } = require('./helpers');
+import { origin, parseWithId } from './helpers.js';
 
-const makeResolver = {
+export default {
     makes: async () => {
         try {
             const makes = await Make.find();
@@ -63,5 +63,3 @@ const makeResolver = {
         }
     },
 }
-
-module.exports =  makeResolver;

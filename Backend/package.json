@@ -22,5 +22,6 @@
     "start": "nodemon App.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "type": "module"
 }

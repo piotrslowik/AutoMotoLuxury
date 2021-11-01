@@ -1,14 +1,14 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const graphqlHttp = require('express-graphql');
-const mongoose = require('mongoose');
+import express from 'express';
+import bodyParser from 'body-parser';
+import graphqlHttp from 'express-graphql';
+import mongoose from 'mongoose';
 
-const cloudinary = require('cloudinary');
+import cloudinary from 'cloudinary';
 
-const graphqlSchema = require('./GraphQL/schema');
-const graphqlResolvers = require('./GraphQL/resolvers');
+import graphqlSchema from './GraphQL/schema/index.js';
+import graphqlResolvers from './GraphQL/resolvers/index.js';
 
-const uploadRouter = require('./Routers/upload');
+import uploadRouter from './Routers/upload.js';
 
 const app = express();
 

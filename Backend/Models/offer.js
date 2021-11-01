@@ -1,4 +1,5 @@
-const { Schema, model } = require('mongoose');
+import mongoose from 'mongoose';
+const { Schema, model } = mongoose;
 
 const offerSchema = new Schema ({
     makeId: {
@@ -58,4 +59,4 @@ const offerSchema = new Schema ({
     },
 });
 
-module.exports = model('Offer', offerSchema);
+export default model('Offer', offerSchema);

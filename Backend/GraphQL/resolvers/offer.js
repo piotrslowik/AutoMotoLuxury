@@ -1,9 +1,9 @@
-const Offer = require('../../Models/offer');
-const User = require('../../Models/user');
+import Offer from '../../Models/offer.js';
+import User from '../../Models/user.js';
 
-const { parseOffer, parseWithId } = require('./helpers');
+import { parseOffer, parseWithId } from './helpers.js';
 
-const offerResolver = {
+export default {
     offers: async () => {
         try {
             const offers = await Offer.find();
@@ -44,9 +44,9 @@ const offerResolver = {
             creator:  args.offerInput.creator,
         });
         try {
-            // const creator = await User.findById(args.offerInput.creator);
-            // creator.createdOffers.push(offer);
-            // await creator.save();
+            const creator = await User.findById(args.offerInput.creator);
+            creator.createdOffers.push(offer);
+            await creator.save();
             const result = await offer.save();
             return parseOffer(result);
         }
@@ -67,5 +67,3 @@ const offerResolver = {
         }
     }
 }
-
-module.exports =  offerResolver;

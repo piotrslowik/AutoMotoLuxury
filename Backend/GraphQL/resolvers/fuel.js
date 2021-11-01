@@ -1,8 +1,8 @@
-const Fuel = require('../../Models/fuel');
+import Fuel from '../../Models/fuel.js';
 
-const { parseWithId } = require('./helpers');
+import { parseWithId } from './helpers.js';
 
-const fuelResolver = {
+export default {
     fuels: async () => {
         try {
             const fuels = await Fuel.find();
@@ -52,5 +52,3 @@ const fuelResolver = {
         }
     },
 }
-
-module.exports = fuelResolver;
