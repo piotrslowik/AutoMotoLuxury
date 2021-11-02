@@ -18,17 +18,10 @@ const Body = ({
   }, []);
   
   const fetchOffers = async () => {
-    try {
-      const result = await getOffers(filterSetup);
-      setOffers(result);
-      setIsLoading(false);
-    }
-    catch (error) {
-      console.error('Could not fetch offers', error);
-      setOffers([]);
-      setIsLoading(false);
-    }
-}
+    const result = await getOffers(filterSetup);
+    setOffers(result);
+    setIsLoading(false);
+  }
 
   return (
     <div className="Body">

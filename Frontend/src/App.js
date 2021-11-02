@@ -24,9 +24,9 @@ const App = () => {
   useEffect(() => {
     (async () => {
       try {
-        await handleDataInit('fuels', getFuels, setFuels);
-        await handleDataInit('origins', getOrigins, setOrigins);
-        await handleDataInit('makes', getMakes, setMakes);
+        handleDataInit('fuels', getFuels, setFuels);
+        handleDataInit('origins', getOrigins, setOrigins);
+        handleDataInit('makes', getMakes, setMakes);
       }
       catch (error) {
         throw error;
@@ -35,12 +35,13 @@ const App = () => {
   }, []);
 
   const handleDataInit = async (array, getter, setter) => {
-    let result = JSON.parse(LocalStorageGet(array));
-    if (result) {
+    const storage = LocalStorageGet(array);
+    if (storage) {
+      const result = JSON.parse(storage);
       setter(result);
     }
     else {
-      result = await getter();
+      const result = await getter();
       LocalStorageSave(array, JSON.stringify(result));
       setter(result);
     }

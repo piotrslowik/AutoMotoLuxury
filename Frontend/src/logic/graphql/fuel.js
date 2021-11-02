@@ -24,6 +24,7 @@ export const getFuels = async () => {
     }
     catch (error) {
         console.error(error);
+        return [];
     }
 }
 

@@ -28,6 +28,7 @@ export const getMakes = async () => {
     }
     catch (error) {
         console.error(error);
+        return [];
     }
 }
 

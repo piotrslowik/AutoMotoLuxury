@@ -25,6 +25,7 @@ export const getOrigins = async () => {
     }
     catch (error) {
         console.error(error);
+        return [];
     }
 }
 

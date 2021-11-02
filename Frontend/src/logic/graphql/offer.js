@@ -108,7 +108,8 @@ export const getOffers = async (filterSetup) => {
         return result.data.data.offers;
     }
     catch (error) {
-        console.error(error);
+        console.error('Could not fetch offers\n', error);
+        return [];
     }
 }
 export const getOfferDetails = async offerId => {
