@@ -12,8 +12,10 @@
     "react-image": "^1.5.1",
     "react-image-gallery": "^0.9.1",
     "react-load-image": "^0.1.6",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "redux": "^4.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
