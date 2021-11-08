@@ -13,6 +13,7 @@
     @media (max-width: $desktop) {
         display: none;
     }
+    z-index: 1;
 
     &--hidden {
         animation-name: hideFilters;

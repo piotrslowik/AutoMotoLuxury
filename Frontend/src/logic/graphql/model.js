@@ -27,7 +27,7 @@ export const getModels = async makeId => {
         return models;
     }
     catch (error) {
-        console.error(error);
+        console.error("Could not fetch models\n", error);
     }
 }
 

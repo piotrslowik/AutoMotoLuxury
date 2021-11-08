@@ -5,7 +5,6 @@ import Body from '../components/Partials/Body';
 import Footer from '../components/Partials/Footer';
 
 const MainPage = () => {
-
   const [filterSetup, setFilterSetup] = useState({});
 
   const handleFilter = obj => {

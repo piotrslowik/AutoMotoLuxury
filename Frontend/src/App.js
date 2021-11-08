@@ -10,10 +10,6 @@ import Error404 from './pages/Error404';
 
 // import DataContext from './context/data-context';
 
-// import { getFuels } from './logic/graphql/fuel';
-// import { getOrigins } from './logic/graphql/origin';
-// import { getMakes } from './logic/graphql/make';
-
 import { Provider } from 'react-redux';
 import store from './store';
 
