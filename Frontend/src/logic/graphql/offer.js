@@ -155,6 +155,7 @@ export const getOfferDetails = async offerId => {
         return result.data.data.offerDetails;
     }
     catch (error) {
-        console.error(error);
+        console.error("Could not fetch offer\n", error);
+        return {};
     }
 }

@@ -11,29 +11,38 @@ import { faCalendarAlt, faForward, faCube, faRoad, faMoneyBillWave } from '@fort
 import { getOfferDetails } from '../../logic/graphql/offer';
 import { formatNumber } from '../../logic/helpers';
 
+import { useSelector, useDispatch } from 'react-redux';
+import offerActions  from '../../store/actions/offer';
+
 const Offer = (props) => {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [offer, setOffer] = useState({});
+    const offer = useSelector(state => state.offer);
+    const dispatch = useDispatch();
+    //const [offer, setOffer] = useState({});
     const [images, setImages] = useState([]);
 
     useEffect(() => {
         const { offerId } = props.match.params
         fetchOffer(offerId);
-    }, []);
+    }, [dispatch]);
     useEffect(() =>{
         parseImages();
     }, [offer]);
+    useEffect( () => () => clearOffer(), [] );
     
     const fetchOffer = async offerId => {
-        try {
-            const result = await getOfferDetails(offerId);
-            setOffer(result);
-            setIsLoading(false);
-        }
-        catch (error) {
-            console.error('Could not fetch offer Details', error);
-        }
+        const result = await getOfferDetails(offerId);
+        setOffer(result);
+        setIsLoading(false);
+    }
+
+    const setOffer = offer => {
+        dispatch(offerActions.setOffer(offer));
+    }
+
+    const clearOffer = () => {
+        dispatch(offerActions.clear());
     }
 
     const parseImages = async () => {

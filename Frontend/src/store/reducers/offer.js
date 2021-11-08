@@ -1,5 +1,5 @@
 const initialState = {
-  id: 0,
+  id: '',
   make: '',
   model: '',
   generation: '',

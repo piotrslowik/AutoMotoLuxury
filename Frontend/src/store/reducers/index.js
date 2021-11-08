@@ -1,8 +1,8 @@
 import parameters from './parameters';
 import offer from './offer';
-import { combinedReducer } from 'redux';
+import { combineReducers } from 'redux';
 
-const reducers = combinedReducer({
+const reducers = combineReducers({
   parameters,
   offer,
 });
