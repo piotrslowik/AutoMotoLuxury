@@ -8,7 +8,6 @@ import Textarea from '../../components/Shared/Fields/Textarea';
 
 import Loader from '../../components/Shared/Loader';
 
-import Header from '../../components/Partials/Header';
 import ImageInput from '../../components/Partials/ImagesInput';
 
 import { getModels } from '../../logic/graphql/model';
@@ -139,7 +138,6 @@ const NewOffer = () => {
         ? <Loader text="Dodawanie oferty..." />
 
         : <div className="NewOffer flex-column-center">
-            <Header />
             <h1>Nowe ogłoszenie</h1>
             <div className="NewOffer-inputs flex-column-center">
                 <div className="NewOffer-grid">

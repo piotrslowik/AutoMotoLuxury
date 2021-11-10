@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import ImageGallery from 'react-image-gallery';
 
-import Header from '../../components/Partials/Header';
 import Loader from '../../components/Shared/Loader';
 import IconAndText from '../../components/Shared/IconAndText';
 
@@ -59,7 +58,6 @@ const Offer = (props) => {
     
     return (
         <div className="Offer flex-column-center">
-            <Header />
             {isLoading
             ?   <Loader text="Pobieranie danych" />
             :   <><div className="Offer-main">

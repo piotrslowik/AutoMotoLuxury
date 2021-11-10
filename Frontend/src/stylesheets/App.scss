@@ -2,8 +2,11 @@
 @import '../stylesheets/variables.scss';
 @import "~react-image-gallery/styles/scss/image-gallery.scss";
 
-body {
-  background-color: $dark-grey;
+button {
+  cursor: pointer;
+}
+a {
+  text-decoration: none !important;
 }
 .App {
   min-height: 100vh;
