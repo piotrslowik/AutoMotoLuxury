@@ -17,7 +17,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Box sx={{ backgroundColor: 'secondary.light' }}>
+        <Box sx={{ backgroundColor: 'secondary.light' }} className="App">
           <AppBar />
           <Router />
           <Footer />

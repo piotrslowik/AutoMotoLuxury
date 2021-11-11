@@ -7,23 +7,31 @@ import { getMakes } from '../../../logic/graphql/make';
 
 import parametersActions from '../../../store/actions/parameters';
 
-import LabelledSelect from '../../Shared/Fields/LabelledSelect';
-import Range from '../../Shared/Fields/Range';
-import Button from '../../Shared/Fields/Button';
+import { Card, CardContent, Typography, Grid, TextField, Button } from '@mui/material';
 
 import { getModels } from '../../../logic/graphql/model';
+import SingleSelect from '../../Shared/Select';
 
 const Filters = () => {
-    // const { fuels, origins, makes } = useSelector(state => state.parameters);
-    const fuels = useSelector(state => state.parameters.fuels);
-    const origins = useSelector(state => state.parameters.origins);
-    const makes = useSelector(state => state.parameters.makes);
+    const dummyObj = {
+        text: 'Wszystkie',
+        id: '0',
+    }
+
+    const { fuels, origins, makes } = useSelector(state => state.parameters);
     const [models, setModels] = useState([]);
 
-    const [fuel, setFuel] = useState({});
-    const [origin, setOrigin] = useState({});
-    const [make, setMake] = useState({});
-    const [model, setModel] = useState({});
+    const [fuel, setFuel] = useState(dummyObj.id);
+    const [origin, setOrigin] = useState(dummyObj.id);
+    const [make, setMake] = useState(dummyObj.id);
+    const [model, setModel] = useState(dummyObj.id);
+    const [loading, setLoading] = useState(true);
+    const [kmsMax, setKmsMax] = useState('');
+    const [kmsMin, setKmsMin] = useState('');
+    const [priceMin, setPriceMin] = useState('');
+    const [priceMax, setPriceMax] = useState('');
+    const [yearMin, setYearMin] = useState('');
+    const [yearMax, setYearMax] = useState('');
 
     const dispatch = useDispatch();
   
@@ -32,7 +40,7 @@ const Filters = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (make.id && make.id !== dummyObj.id) {
+        if (make !== dummyObj.id) {
             fetchModels(make);
         } else {
             setModels([]);
@@ -46,6 +54,7 @@ const Filters = () => {
       setOrigins(origins);
       const makes = await getMakes();
       setMakes(makes);
+      setLoading(false);
   }
   
     const setFuels = param => {
@@ -59,13 +68,8 @@ const Filters = () => {
     }
 
     const fetchModels = async make =>{
-        const models = await getModels(make.id);
+        const models = await getModels(make);
         setModels(models);
-    }
-
-    const dummyObj = {
-        text: 'Wszystkie',
-        id: '0',
     }
 
     const formatArray = (arr, field) => {
@@ -76,10 +80,10 @@ const Filters = () => {
     }
 
     const formatMakeArray = (arr, field) => {
-        if (!origin.id || origin.id === 0) {
+        if (origin === 0) {
             return formatArray(arr, field);
         } else {
-            const filtered = arr.filter(make => make.origin._id === origin.id);
+            const filtered = arr.filter(make => make.origin._id === origin);
             return formatArray(filtered, field);
         }
     }
@@ -87,26 +91,158 @@ const Filters = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <div className="Filters">
-            <LabelledSelect label="Paliwo"
-                values={formatArray(fuels, 'fuel')}
-                onChange={fuel => setFuel(fuel)} />
-            <LabelledSelect label="Pochodzenie"
-                values={formatArray(origins, 'origin')}
-                onChange={origin => setOrigin(origin)} />
-            <LabelledSelect label="Marka"
-                values={formatMakeArray(makes, 'make')}
-                onChange={make => {
-                    setMake(make)
-                    }} />
-            <LabelledSelect label="Model"
-                values={formatArray(models, 'model')}
-                onChange={model => setModel(model)} />
-            <Range label="Przebieg" />
-            <Range label="Cena" />
-            <Range label="Rocznik" min={currentYear - 100} max={currentYear} />
-            <Button text="Filtruj" onClick={() => {}} />
-        </div>
+        <Card>
+            {loading ? null :(
+            <CardContent>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
+                            <Typography fontWeight='700' ml={2}>
+                                Paliwo
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <SingleSelect
+                                items={formatArray(fuels, 'fuel')}
+                                value={fuel}
+                                onChange={setFuel}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
+                            <Typography fontWeight='700' ml={2}>
+                                Pochodzenie
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <SingleSelect
+                                items={formatArray(origins, 'origin')}
+                                value={origin}
+                                onChange={setOrigin}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
+                            <Typography fontWeight='700' ml={2}>
+                                Marka
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <SingleSelect
+                                items={formatMakeArray(makes, 'make')}
+                                value={make}
+                                onChange={setMake}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
+                            <Typography fontWeight='700' ml={2}>
+                                Model
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <SingleSelect
+                                items={formatArray(models, 'model')}
+                                value={model}
+                                onChange={setModel}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
+                            <Typography fontWeight='700' ml={2}>
+                                Przebieg
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sx={{ display: 'flex' }}>
+                            <TextField 
+                                variant="outlined"
+                                type="number"
+                                value={kmsMin}
+                                onChange={e => setKmsMin(e.target.value)}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0', max: '999999', "aria-autocomplete": "off" }}
+                                sx={{ flexGrow: 1 }}
+                            />
+                            <TextField 
+                                variant="outlined"
+                                type="number"
+                                value={kmsMax}
+                                onChange={e => setKmsMax(e.target.value)}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0', max: '999999', "aria-autocomplete": "off" }}
+                                sx={{ ml: 2, flexGrow: 1 }}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
+                            <Typography fontWeight='700' ml={2}>
+                                Cena
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sx={{ display: 'flex' }}>
+                            <TextField 
+                                variant="outlined"
+                                type="number"
+                                value={priceMin}
+                                onChange={e => setPriceMin(e.target.value)}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0', max: '999999', "aria-autocomplete": "off" }}
+                                sx={{ flexGrow: 1 }}
+                            />
+                            <TextField 
+                                variant="outlined"
+                                type="number"
+                                value={priceMax}
+                                onChange={e => setPriceMax(e.target.value)}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0', max: '999999', "aria-autocomplete": "off" }}
+                                sx={{ ml: 2, flexGrow: 1 }}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Grid item xs={12}>
+                            <Typography fontWeight='700' ml={2}>
+                                Rocznik
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sx={{ display: 'flex' }}>
+                            <TextField 
+                                variant="outlined"
+                                type="number"
+                                value={yearMin}
+                                onChange={e => setYearMin(e.target.value)}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', max: currentYear.toString(), "aria-autocomplete": "off" }}
+                                sx={{ flexGrow: 1 }}
+                            />
+                            <TextField 
+                                variant="outlined"
+                                type="number"
+                                value={yearMax}
+                                onChange={e => setYearMax(e.target.value)}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', max: currentYear.toString(), "aria-autocomplete": "off" }}
+                                sx={{ ml: 2, flexGrow: 1 }}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            size="large"
+                            fullWidth
+                            sx={{ mt: 4 }}
+                        >
+                            Filtruj
+                        </Button>
+                    </Grid>
+                </Grid>
+            </CardContent>
+            )}
+        </Card>
     )
 }
 
