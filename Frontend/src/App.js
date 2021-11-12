@@ -11,7 +11,7 @@ import './stylesheets/App.scss';
 
 import AppBar from './components/Partials/AppBar';
 import Footer from './components/Partials/Footer';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 const App = () => { 
   return (
@@ -19,7 +19,9 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Box sx={{ backgroundColor: 'secondary.light' }} className="App">
           <AppBar />
-          <Router />
+          <Container maxWidth="xl">
+            <Router />
+          </Container>
           <Footer />
         </Box>
       </ThemeProvider>
