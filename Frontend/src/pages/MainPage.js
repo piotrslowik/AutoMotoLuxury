@@ -9,7 +9,7 @@ const MainPage = () => {
   const [filterSetup, setFilterSetup] = useState({});
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={4}>
       <Grid item xs={12} lg={4}>
         <Filters />
       </Grid>

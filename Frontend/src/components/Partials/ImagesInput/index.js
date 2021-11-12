@@ -3,24 +3,32 @@ import React from 'react';
 
 import ImagesList from '../../Shared/ImagesList';
 import LabelledInput from '../../Shared/Fields/LabelledInput';
+import { Box, Typography } from '@mui/material';
 
 const ImageInput = ({
-    images,
-    onAddImage,
-    onDeleteImage,
+  images,
+  onAddImage,
+  onDeleteImage,
 }) => {
 
-    const handleInput = event => {
-        const file = event.target.files[0];
-        onAddImage(file);
-    }
+  const handleInput = event => {
+    const file = event.target.files[0];
+    onAddImage(file);
+  }
 
-    return (
-        <div className="ImagesInput flex-column-center">
-            <ImagesList images={images} onDelete={onDeleteImage} />
-            <LabelledInput type="file" label="Dodaj zdjęcia" onChange={handleInput} />
-        </div>
-    )
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Typography variant="h5">
+          Dodaj zdjęcia
+        </Typography>
+        <LabelledInput type="file" onChange={handleInput} />
+      </Box>
+      <Box sx={{ display: 'flex', mt: 3 }}>
+        <ImagesList images={images} onDelete={onDeleteImage} />
+      </Box>
+    </Box>
+  )
 }
 
 export default ImageInput;
