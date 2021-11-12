@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import OfferCard from '../../Shared/OfferCard';
 import Loader from '../../Shared/Loader';
+import Grid from '@mui/material/Grid';
 
 import { getOffers } from '../../../logic/graphql/offer';
 
@@ -27,9 +28,13 @@ const Body = ({
     <div className="Body">
       {isLoading
       ? <Loader text="Pobieram oferty" />
-      : offers.map( offer => {
-          return <OfferCard offer={offer} key={offer._id} />
-        })
+      : <Grid container gap={3}>
+        {
+          offers.map( offer => {
+            return <Grid item xs={12} key={offer._id}> <OfferCard offer={offer} key={offer._id} /> </Grid>
+          })
+        }
+        </Grid>
       }
     </div>
   );
