@@ -102,7 +102,7 @@ const Filters = () => {
       {loading ? null :(
       <CardContent>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                 Paliwo
@@ -116,7 +116,7 @@ const Filters = () => {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                   Pochodzenie
@@ -131,7 +131,7 @@ const Filters = () => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                   Marka
@@ -145,7 +145,7 @@ const Filters = () => {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                   Model
@@ -160,7 +160,7 @@ const Filters = () => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                 Przebieg
@@ -185,7 +185,7 @@ const Filters = () => {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                 Cena
@@ -210,7 +210,7 @@ const Filters = () => {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                 Rocznik
@@ -235,7 +235,7 @@ const Filters = () => {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <Button
               color="secondary"
               variant="contained"
