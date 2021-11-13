@@ -39,7 +39,7 @@ const OfferCard = ({ offer }) => {
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <Typography variant="h4" fontWeight={500} sx={{mt: 2 }}>
+                    <Typography variant="h4" fontWeight={500} sx={{mt: 2, textShadow: '3px 3px 4px darkgrey' }} color='primary.dark' >
                       {formatNumber(price)} PLN
                     </Typography>
                   </Grid>
