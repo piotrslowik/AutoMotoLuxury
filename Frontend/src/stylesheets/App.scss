@@ -17,6 +17,28 @@ a {
   flex-direction: column;
   align-items: center;
 }
+// fixing gallery slider
+.image-gallery-slide {
+  background: rgba($color: #FFF, $alpha: .2);
+
+  .image-gallery-image {
+    // display: flex;
+    // justify-content: center;
+
+    img {
+      max-height: 360px;
+      @media (min-width: 600px) {
+        max-height: 420px;
+      }
+      @media (min-width: $tablet) {
+        max-height: 487px;
+      }
+      width: auto;
+      display: block;
+      margin: auto;
+    }
+  }
+}
 
 @import "../pages/Error404/styles.scss";
 @import "../pages/NewOffer/styles.scss";

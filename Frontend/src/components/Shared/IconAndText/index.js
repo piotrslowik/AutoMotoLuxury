@@ -11,7 +11,7 @@ const IconAndText = ({
     return (
     <p>
         <FontAwesomeIcon icon={icon} className="IconAndText" />
-        { text }
+        <span style={{ marginLeft: 15 }}>{ text }</span>
     </p>
     )
 }
