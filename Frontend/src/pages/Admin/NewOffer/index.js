@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from "react-router"
 import { useTheme } from '@mui/material/styles';
-import parametersActions from '../../store/actions/parameters';
-import errorActions from '../../store/actions/error';
+import parametersActions from '../../../store/actions/parameters';
+import errorActions from '../../../store/actions/error';
 
-import Loader from '../../components/Shared/Loader';
-import SingleSelect from '../../components/Shared/Select';
-import ImageInput from '../../components/Partials/ImagesInput';
+import Loader from '../../../components/Shared/Loader';
+import SingleSelect from '../../../components/Shared/Select';
+import ImageInput from '../../../components/Partials/ImagesInput';
 import { Card, CardContent, Grid, TextField, Typography, TextareaAutosize, Button, Alert, AlertTitle } from '@mui/material';
 
-import { getModels } from '../../logic/graphql/model';
-import { getFuels } from '../../logic/graphql/fuel';
-import { getMakes } from '../../logic/graphql/make';
-import { addOffer } from '../../logic/graphql/offer';
+import { getModels } from '../../../logic/graphql/model';
+import { getFuels } from '../../../logic/graphql/fuel';
+import { getMakes } from '../../../logic/graphql/make';
+import { addOffer } from '../../../logic/graphql/offer';
 
 
 const NewOffer = () => {
