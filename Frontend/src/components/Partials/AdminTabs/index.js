@@ -1,71 +1,102 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router"
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 
-import { Tabs, Tab, Card, CardContent } from "@mui/material";
+import DrawerItems from './items';
 
-const AdminTabs = ({ children }) => {
-  const { pathname } = useLocation();
-  const history = useHistory();
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { Icon, Card } from '@mui/material';
 
-  const [value, setValue] = useState(0);
+const drawerWidth = 200;
 
-  useEffect(() => {
-    let pathArr = pathname.split('/');
-    pathArr = pathArr.slice(0, 3);
-    const keyword = pathArr.join('/');
-    const index = elements.indexOf(el => keyword === el.route);
-    console.log(index);
-    elements.forEach(el => {
-      console.log(keyword, el.route, keyword === el.route);
-    })
-    setValue(index);
-  }, []);
+const AdminTabs = ({ window, children }) => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [pageHeader, setPageHeader] = useState('');
 
-  const getRoute = (endpoint) => {
-    return `/admin/${endpoint}`;
-  }
-  
-  const elements = [
-    {
-      text: "Oferty",
-      route: getRoute("offers"),
-    },
-    {
-      text: "Parametry",
-      route: getRoute("params"),
-    },
-    {
-      text: "Użytkownicy",
-      route: getRoute("users"),
-    },
-  ];
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
-  const mapTabs = () => {
-    return elements.map(el => 
-      <Tab label={el.text} onClick={() => goTo(el.route)} key={el.route} />
-    );
-  }
-
-  const goTo = (route) =>{
-    history.push(route);
-  }
-
-  const handleTabChange = (e) => {
-    console.log(e.target.value);
-    setValue(e.target.value);
-  }
+  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Card>
-      <Tabs value={value} onChange={handleTabChange} centered>
-        { mapTabs() }
-      </Tabs>
-      <CardContent>
-        { children }
-      </CardContent>
+      <AppBar
+        position="relative"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer,
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <Icon>menu</Icon>
+          </IconButton>
+          <Typography
+            component="div"
+            sx={{
+              py: { xs: 2, sm: 3 },
+              fontSize: { xs: '1.6em', sm: '2em' },
+              width: '100%',
+              textAlign: 'center',
+            }}
+          >
+            { pageHeader }
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+
+        { /*Drawer on mobile */}
+        
+      <Drawer
+        container={container}
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          flexShrink: 0,
+        }}
+      >
+        <DrawerItems pageNameSetter={setPageHeader} />
+      </Drawer>
+
+      <Box sx={{ display: 'flex' }}>
+              { /*Drawer standard */}
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }, position: 'relative' }}
+        >
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+          >
+            <DrawerItems pageNameSetter={setPageHeader} />
+          </Box>
+        </Box>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1 }}
+        >
+          { children }
+        </Box>
+      </Box>
     </Card>
   );
-};
+}
 
 export default AdminTabs;
