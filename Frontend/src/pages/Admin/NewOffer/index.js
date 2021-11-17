@@ -4,6 +4,7 @@ import { useHistory } from "react-router"
 import { useTheme } from '@mui/material/styles';
 import parametersActions from '../../../store/actions/parameters';
 import errorActions from '../../../store/actions/error';
+import helpersActions from '../../../store/actions/helpers';
 
 import Loader from '../../../components/Shared/Loader';
 import SingleSelect from '../../../components/Shared/Select';
@@ -48,6 +49,7 @@ const NewOffer = () => {
   }, [make]);
 
   useEffect(() => {
+    setPageHeader();
     fetchData();
   }, [dispatch]);
 
@@ -56,6 +58,10 @@ const NewOffer = () => {
       dispatch(errorActions.setError({}));
     }, 4000);
   }, [error]);
+
+  const setPageHeader = () => {
+    dispatch(helpersActions.setActionPageHeader("Nowe ogłoszenie"));
+  }
 
   const fetchModels = async make => {
     if (make !== '') {
@@ -171,11 +177,7 @@ const NewOffer = () => {
     
     ? <Loader text={ isAddingOffer ? "Dodawanie oferty..." : ""} />
 
-    : <Card>
-      <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography variant="h3" align="center" sx={{ mb: 4, fontWeight: 900 }}>
-          Nowe ogłoszenie
-        </Typography>
+    : <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {error.visible
         ? <Alert severity="error" sx={{ marginBottom: 4, width: '100%'}}>
             <AlertTitle>Błąd</AlertTitle>
@@ -310,30 +312,6 @@ const NewOffer = () => {
           <Grid item xs={2} sm={3} md={4} />
         </Grid>
       </CardContent>
-    </Card>
-    // : <div className="NewOffer flex-column-center">
-    //   <h1>Nowe ogłoszenie</h1>
-    //   <div className="NewOffer-inputs flex-column-center">
-    //     <div className="NewOffer-grid">
-    //       <LabelledSelect values={formatArray(makes, 'make')} label="Marka" onChange={handleMakeSelect} />
-    //       <LabelledSelect values={formatArray(models, 'model')} label="Model" onChange={handleModelSelect} />
-    //       <LabelledInput label="Generacja" value={generation} onChange={handleGenerationInput} placeholder="np. II albo (W204)" />
-    //       <LabelledSelect values={formatArray(fuels, 'fuel')} label="Paliwo" onChange={handleFuelSelect} />
-    //       <LabelledInput type="number" label="Rocznik" value={year} onChange={handleYearInput} min={1900} max={date.getFullYear()} placeholder="Rok produkcji" />
-    //       <LabelledInput type="number" label="Przebieg" value={kms} onChange={handleKmsInput} min={0} 
-    //       placeholder="Wartość w km" />
-    //       <LabelledInput type="number" label="Pojemność" value={volume} onChange={handleVolumeInput} min={1} placeholder="Wartość w cm3" />
-    //       <LabelledInput type="number" label="Moc" value={power} onChange={handlePowerInput} min={0} placeholder="Wartość w KM" />
-    //       <LabelledInput type="number" label="Cena" value={price} onChange={handlePriceInput} min={1} placeholder="Wartość w zł" />
-    //     </div>
-    //   </div>
-    //   <h2>Krótki opis:</h2>
-    //   <Textarea className="NewOffer__desc--short" maxlength={250} rows={3} value={shortDesc} onChange={handleShortDescInput} />
-    //   <h2>Długi opis:</h2>
-    //   <Textarea className="NewOffer__desc--long"  rows={10} value={longDesc} onChange={handleLongDescInput} />
-    //   <ImageInput images={images.map(img => {return {src: URL.createObjectURL(img.file), id:img.id}})} onAddImage={handleAddImage} onDeleteImage={handleDeleteImage} />
-    //   <Button className="NewOffer__button--add" text="Dodaj" onClick={handleAddOffer} />
-    // </div>
   );
 }
 

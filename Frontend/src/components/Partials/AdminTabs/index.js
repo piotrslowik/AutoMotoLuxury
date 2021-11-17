@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import DrawerItems from './items';
 
@@ -13,8 +14,9 @@ import { Icon, Card } from '@mui/material';
 const drawerWidth = 200;
 
 const AdminTabs = ({ window, children }) => {
+  const { adminPageHeader } = useSelector(state => state.helpers);
+
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [pageHeader, setPageHeader] = useState('');
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -28,6 +30,7 @@ const AdminTabs = ({ window, children }) => {
         position="relative"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer,
+          backgroundColor: 'primary.dark',
         }}
       >
         <Toolbar>
@@ -43,13 +46,13 @@ const AdminTabs = ({ window, children }) => {
           <Typography
             component="div"
             sx={{
-              py: { xs: 2, sm: 3 },
-              fontSize: { xs: '1.6em', sm: '2em' },
+              py: { xs: 2, sm: 2.5 },
+              fontSize: { xs: '1.6em', sm: '2.2em' },
               width: '100%',
               textAlign: 'center',
             }}
           >
-            { pageHeader }
+            { adminPageHeader }
           </Typography>
         </Toolbar>
       </AppBar>
@@ -70,14 +73,19 @@ const AdminTabs = ({ window, children }) => {
           flexShrink: 0,
         }}
       >
-        <DrawerItems pageNameSetter={setPageHeader} />
+        <DrawerItems />
       </Drawer>
 
       <Box sx={{ display: 'flex' }}>
               { /*Drawer standard */}
         <Box
           component="nav"
-          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }, position: 'relative' }}
+          sx={{ 
+            width: { sm: drawerWidth },
+            flexShrink: { sm: 0 },
+            position: 'relative',
+            borderRight: '1px solid rgba(0, 0, 0, .12)',
+          }}
         >
           <Box
             sx={{
@@ -85,12 +93,12 @@ const AdminTabs = ({ window, children }) => {
               '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
             }}
           >
-            <DrawerItems pageNameSetter={setPageHeader} />
+            <DrawerItems />
           </Box>
         </Box>
         <Box
           component="main"
-          sx={{ flexGrow: 1 }}
+          sx={{ flexGrow: 1, mt: 2 }}
         >
           { children }
         </Box>

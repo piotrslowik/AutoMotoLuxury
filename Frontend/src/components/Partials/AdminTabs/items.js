@@ -1,17 +1,8 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useLocation } from 'react-router';
+import React from 'react';
 
 import { Divider, List, ListItem, ListItemIcon, ListItemText, Icon} from '@mui/material';
 
-const ItemsDrawer = ({ pageNameSetter }) => {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    const index = items.flat().indexOf(el => el.route === pathname);
-    console.log(items.flat());
-    console.log(pathname, index);
-  }, []);
+const ItemsDrawer = () => {
 
   const getRoute = (endpoint) => {
     return `/admin/${endpoint}`;
@@ -79,10 +70,6 @@ const ItemsDrawer = ({ pageNameSetter }) => {
       }
     </div>
   );
-};
-
-ItemsDrawer.propTypes = {
-  pageNameSetter: PropTypes.func,
 };
 
 export default ItemsDrawer;
