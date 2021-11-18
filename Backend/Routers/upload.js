@@ -5,7 +5,8 @@ import multer from 'multer';
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single('image');
 
-import dUri from 'datauri';
+import Parser from 'datauri/parser.js';
+const dUri = new Parser();
 
 import path from 'path';
 
@@ -13,7 +14,7 @@ import cloudinary from 'cloudinary';
 
 
 
-const dataUri = req => dUri(path.extname(req.file.originalname).toString(), req.file.buffer);
+const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
 
 router.post('/images',  upload, async (req, res) => {
   try {
