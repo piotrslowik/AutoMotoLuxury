@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import AdminTabs from '../components/Partials/AdminTabs';
 
 import NewOffer from '../pages/Admin/NewOffer';
