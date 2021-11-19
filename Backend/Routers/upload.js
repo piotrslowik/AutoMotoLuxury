@@ -19,7 +19,7 @@ const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(
 router.post('/images',  upload, async (req, res) => {
   try {
     const file = dataUri(req).content;
-    const result = await cloudinary.v2.uploader.upload(file);
+    const result = await cloudinary.v2.uploader.upload(file, { folder: req.body.folderName });
     res.send(result.url);
   }
   catch (error) {

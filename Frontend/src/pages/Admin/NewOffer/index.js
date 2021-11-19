@@ -143,6 +143,7 @@ const NewOffer = () => {
   }
   const handleAddOffer = async () => {
     try {
+      const folderName = createFolderName();
       setIsAddingOffer(true);
       const result = await addOffer(
         make,
@@ -156,6 +157,7 @@ const NewOffer = () => {
         price,
         shortDesc,
         longDesc,
+        folderName,
         images.map(image => image.file)
       );
       history.push(`offer/${result._id}`);
@@ -168,6 +170,11 @@ const NewOffer = () => {
         msg: "Nie udało się utworzyć nowej oferty."
       }));
     }
+  }
+  const createFolderName = () => {
+    const makeName = makes.find(m => m._id === make).make;
+    const modelName = models.find(m => m._id === model).model;
+    return `${makeName}_${modelName.replaceAll(' ', '_')}_${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}_${date.getHours()}:${date.getMinutes()}`;
   }
 
   const date = new Date();

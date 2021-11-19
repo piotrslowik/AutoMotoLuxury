@@ -2,10 +2,10 @@ import Axios from 'axios';
 
 import { arrayToGraphQLString } from '../helpers';
 
-export const addOffer = async (makeId, modelId, gen, fuelId, year, kms, volume, power, price, shortDesc, longDesc, images) => {
+export const addOffer = async (makeId, modelId, gen, fuelId, year, kms, volume, power, price, shortDesc, longDesc, folderName, images) => {
 
     try {
-        const imagesUrls = await getImagesUrls(images);
+        const imagesUrls = await getImagesUrls(images, folderName);
 
         const date = new Date();
         const query = `
@@ -44,11 +44,12 @@ export const addOffer = async (makeId, modelId, gen, fuelId, year, kms, volume, 
     }
 }
 
-const uploadImgToCloudinary = async img => {
+const uploadImgToCloudinary = async (img, folderName) => {
     try {
         let data = new FormData();
 
         data.append('image', img, img.name);
+        data.append('folderName', folderName);
 
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
@@ -62,12 +63,12 @@ const uploadImgToCloudinary = async img => {
     }
 }
 
-const getImagesUrls = async images => {
+const getImagesUrls = async (images, folderName) => {
     try {
-        return Promise.all(images.map(async img => await uploadImgToCloudinary(img)));
+        return Promise.all(images.map(async img => await uploadImgToCloudinary(img, folderName)));
     }
     catch (error) {
-        console.error('Could not upload images to Cloudinary', error);
+        console.error('Could not upload images to Cloudinary\n', error);
         return [];
     }
 }
