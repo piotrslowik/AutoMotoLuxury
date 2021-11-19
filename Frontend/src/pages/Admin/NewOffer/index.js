@@ -160,10 +160,10 @@ const NewOffer = () => {
         folderName,
         images.map(image => image.file)
       );
-      history.push(`offer/${result._id}`);
+     history.push(`/offer/${result._id}`);
     }
     catch (error) {
-      console.error('Adding new offer failed', error);
+      console.error('Adding new offer failed\n', error);
       setIsAddingOffer(false);
       dispatch(errorActions.setError({
         visible: true,

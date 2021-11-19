@@ -10,12 +10,10 @@ const AdminRouter = () => {
 
   return (
     <AdminTabs>
-      <Router>
-        <Switch>
-          <Route exact path={`${path}/offers/new`} component={NewOffer} />
-          <Redirect to="/404" />
-        </Switch>
-      </Router>
+      <Switch>
+        <Route exact path={`${path}/offers/new`} component={NewOffer} />
+        <Redirect to="/404" />
+      </Switch>
     </AdminTabs>
   )
 };
