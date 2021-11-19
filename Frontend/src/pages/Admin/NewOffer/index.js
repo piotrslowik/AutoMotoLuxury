@@ -9,7 +9,7 @@ import helpersActions from '../../../store/actions/helpers';
 import Loader from '../../../components/Shared/Loader';
 import SingleSelect from '../../../components/Shared/Select';
 import ImageInput from '../../../components/Partials/ImagesInput';
-import { Card, CardContent, Grid, TextField, Typography, TextareaAutosize, Button, Alert, AlertTitle } from '@mui/material';
+import { CardContent, Grid, TextField, Typography, TextareaAutosize, Button, Alert, AlertTitle } from '@mui/material';
 
 import { getModels } from '../../../logic/graphql/model';
 import { getFuels } from '../../../logic/graphql/fuel';
@@ -30,11 +30,11 @@ const NewOffer = () => {
   const [model, setModel] = useState('0');
   const [generation, setGeneration] = useState('');
   const [fuel, setFuel] = useState('');
-  const [year, setYear] = useState(0);
-  const [kms, setKms] = useState(0);
-  const [volume, setVolume] = useState(0);
-  const [power, setPower] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [year, setYear] = useState('');
+  const [kms, setKms] = useState('');
+  const [volume, setVolume] = useState('');
+  const [power, setPower] = useState('');
+  const [price, setPrice] = useState('');
   const [shortDesc, setShortDesc] = useState('');
   const [longDesc, setLongDesc] = useState('');
   const [images, setImages] = useState([]);
@@ -108,19 +108,19 @@ const NewOffer = () => {
     setFuel(fuel);
   }
   const handleYearInput = event => {
-    setYear(event.target.value);
+    setYear(event.target.value.replaceAll('e', ''));
   }
   const handleKmsInput = event => {
-    setKms(event.target.value);
+    setKms(event.target.value.replaceAll('e', ''));
   }
   const handleVolumeInput = event => {
-    setVolume(event.target.value);
+    setVolume(event.target.value.replaceAll('e', ''));
   }
   const handlePowerInput = event => {
-    setPower(event.target.value);
+    setPower(event.target.value.replaceAll('e', ''));
   }
   const handlePriceInput = event => {
-    setPrice(event.target.value);
+    setPrice(event.target.value.replaceAll('e', ''));
   }
   const handleShortDescInput = event => {
     setShortDesc(event.target.value);
@@ -142,39 +142,53 @@ const NewOffer = () => {
     setImages(newImages);
   }
   const handleAddOffer = async () => {
-    try {
-      const folderName = createFolderName();
-      setIsAddingOffer(true);
-      const result = await addOffer(
-        make,
-        model,
-        generation,
-        fuel,
-        year,
-        kms,
-        volume,
-        power,
-        price,
-        shortDesc,
-        longDesc,
-        folderName,
-        images.map(image => image.file)
-      );
-     history.push(`/offer/${result._id}`);
+    if (validate()) {
+      try {
+        const folderName = createFolderName();
+        setIsAddingOffer(true);
+        const result = await addOffer(
+          make,
+          model,
+          generation,
+          fuel,
+          year,
+          kms,
+          volume,
+          power,
+          price,
+          shortDesc,
+          longDesc,
+          folderName,
+          images.map(image => image.file)
+        );
+      history.push(`/offer/${result._id}`);
+      }
+      catch (error) {
+        console.error('Adding new offer failed\n', error);
+        setIsAddingOffer(false);
+        dispatch(errorActions.setError({
+          visible: true,
+          msg: "Nie udało się utworzyć nowej oferty."
+        }));
+      }
     }
-    catch (error) {
-      console.error('Adding new offer failed\n', error);
-      setIsAddingOffer(false);
+    else {
       dispatch(errorActions.setError({
         visible: true,
-        msg: "Nie udało się utworzyć nowej oferty."
+        msg: "Podano nieprawidłowe dane."
       }));
     }
   }
+
   const createFolderName = () => {
     const makeName = makes.find(m => m._id === make).make;
     const modelName = models.find(m => m._id === model).model;
     return `${makeName}_${modelName.replaceAll(' ', '_')}_${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}_${date.getHours()}:${date.getMinutes()}`;
+  }
+
+  const validate = () => {
+    return make !== '' && model !== '0' && fuel !== '' && year !== '' && kms !== '' && volume !== '' && power !== '' 
+      && price !== '' && shortDesc.length > 20 && longDesc.length > 100 && images.length > 0;
   }
 
   const date = new Date();
@@ -235,6 +249,8 @@ const NewOffer = () => {
               label="Rocznik"
               placeholder="Rok produkcji"
               fullWidth
+              type="number"                
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: 1900, max: date.getFullYear(), "aria-autocomplete": "off" }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -244,6 +260,8 @@ const NewOffer = () => {
               label="Przebieg"
               placeholder="Wartość w km"
               fullWidth
+              type="number"                
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', "aria-autocomplete": "off" }}
             />
           </Grid>
 
@@ -254,6 +272,8 @@ const NewOffer = () => {
               label="Pojemność"
               placeholder="Wartość w cm3"
               fullWidth
+              type="number"                
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', "aria-autocomplete": "off" }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -263,6 +283,8 @@ const NewOffer = () => {
               label="Moc"
               placeholder="Wartość w KM"
               fullWidth
+              type="number"                
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', "aria-autocomplete": "off" }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -272,6 +294,8 @@ const NewOffer = () => {
               label="Cena"
               placeholder="Wartość w PLN"
               fullWidth
+              type="number"                
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', "aria-autocomplete": "off" }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -279,10 +303,10 @@ const NewOffer = () => {
               Krótki opis
             </Typography>
             <TextareaAutosize
-              placeholder="Krótki opis"
               style={{ width: '100%', fontSize: theme.typography.fontSize + 4, fontFamily: theme.typography.fontFamily, padding: 12, marginTop: 4 }}
               value={shortDesc}
               onChange={handleShortDescInput}
+              placeholder="Minimum 20 znaków"
             />
           </Grid>
           <Grid item xs={12}>
@@ -295,6 +319,7 @@ const NewOffer = () => {
               value={longDesc}
               minRows={3}
               onChange={handleLongDescInput}
+              placeholder="Minimum 100 znaków"
             />
           </Grid>
           <Grid item xs={12}>
