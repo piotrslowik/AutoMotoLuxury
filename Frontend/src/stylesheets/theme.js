@@ -38,6 +38,12 @@ const theme = createTheme({
     black: {
       main: '#000',
     },
+    error: {
+      main: '#F00',
+      light: '#F33',
+      dark: '#D00',
+      contrastText: '#FFF',
+    }
   },
   breakpoints: {
     values: {
