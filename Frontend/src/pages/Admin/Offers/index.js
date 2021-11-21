@@ -119,7 +119,7 @@ const Offers = () => {
   return (
     (isLoading)
     
-    ? <Loader color={theme.palette.primary.main} />
+    ? <Loader color={theme.palette.primary.main} text="Wczytywanie ogłoszeń" />
 
     : <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Box sx={{ mb: 3, display: 'flex', width: '100%' }}>
