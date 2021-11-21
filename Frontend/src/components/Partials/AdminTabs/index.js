@@ -98,7 +98,7 @@ const AdminTabs = ({ window, children }) => {
         </Box>
         <Box
           component="main"
-          sx={{ flexGrow: 1, mt: 2 }}
+          sx={{ flexGrow: 1, mt: 2, overflowX: 'auto', }}
         >
           { children }
         </Box>

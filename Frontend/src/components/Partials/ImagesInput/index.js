@@ -18,7 +18,7 @@ const ImageInput = ({
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', }}>
         <Typography variant="h5">
           Dodaj zdjęcia
         </Typography>
