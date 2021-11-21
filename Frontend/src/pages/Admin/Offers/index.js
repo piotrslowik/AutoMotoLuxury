@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTheme } from '@emotion/react';
 import helpersActions from '../../../store/actions/helpers';
 
 import Table from '@mui/material/Table';
@@ -23,6 +24,7 @@ import { formatNumber } from '../../../logic/helpers';
 
 const Offers = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const [isLoading, setIsLoading] = useState(true);
   const [offersOriginal, setOffersOriginal] = useState([]);
@@ -117,7 +119,7 @@ const Offers = () => {
   return (
     (isLoading)
     
-    ? <Loader />
+    ? <Loader color={theme.palette.primary.main} />
 
     : <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Box sx={{ mb: 3, display: 'flex', width: '100%' }}>
