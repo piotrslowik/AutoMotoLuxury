@@ -17,12 +17,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Box sx={{ backgroundColor: 'secondary.light' }} className="App">
+        <Box sx={{ backgroundColor: 'secondary.light', pb: 2, }} className="App">
           <AppBar />
           <Container maxWidth="xl">
             <Router />
           </Container>
-          <Footer />
         </Box>
       </ThemeProvider>
     </Provider>
