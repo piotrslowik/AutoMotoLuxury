@@ -46,7 +46,13 @@ const DataTable = ({
     }
   }
   const handleSearch = () => {
-    setItems(items.filter(o => o.make.toLowerCase().includes(searchValue.toLowerCase()) || o.model.toLowerCase().includes(searchValue.toLowerCase())));
+    const searchableValues = headers.filter(h => h.searchable).map(h => h.value);
+    setItems(items.filter(item => searchComparer(item, searchableValues)));
+  }
+  const searchComparer = (item, values) => {
+    let result = false;
+    values.forEach(val => result |= item[val].toLowerCase().includes(searchValue.toLowerCase()));
+    return result;
   }
   const handleSearchOnEnterKey = (e) => {
     if (e.keyCode === 13) handleSearch();

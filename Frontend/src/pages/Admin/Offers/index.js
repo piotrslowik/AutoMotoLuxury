@@ -33,12 +33,14 @@ const Offers = () => {
       value: 'make',
       align: 'center',
       sortable: true,
+      searchable: true,
     },
     {
       text: 'Model',
       value: 'model',
       align: 'center',
       sortable: true,
+      searchable: true,
     },
     {
       text: 'Cena',
