@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import { Divider, List, ListItem, ListItemIcon, ListItemText, Icon} from '@mui/material';
 
 const ItemsDrawer = () => {
@@ -24,17 +24,17 @@ const ItemsDrawer = () => {
     [
       {
         text: "Paliwa",
-        route: getRoute("params/fuels"),
+        route: getRoute("fuels"),
         icon: "local_gas_station",
       },
       {
         text: "Marki",
-        route: getRoute("params/makes"),
+        route: getRoute("makes"),
         icon: "directions_car_filled",
       },
       {
         text: "Pochodzenia",
-        route: getRoute("params/origins"),
+        route: getRoute("origins"),
         icon: "flag",
       },
     ],
@@ -55,12 +55,14 @@ const ItemsDrawer = () => {
             <List>
               {
                 domain.map(item => 
-                  <ListItem button key={item.route}>
-                    <ListItemIcon>
-                      <Icon>{ item.icon }</Icon>
-                    </ListItemIcon>
-                    <ListItemText primary={item.text} />
-                  </ListItem>
+                  <Link key={item.route} to={item.route}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Icon>{ item.icon }</Icon>
+                      </ListItemIcon>
+                      <ListItemText primary={item.text} />
+                    </ListItem>
+                  </Link>
                 )
               }
             </List>

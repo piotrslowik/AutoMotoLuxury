@@ -18,6 +18,7 @@ const DataTable = ({
   items,
   searchable,
   sx,
+  headerSlot,
   slot,
   size,
 }) => {
@@ -59,6 +60,28 @@ const DataTable = ({
   }
   const getSortArrow = (val) => {
     return val === sortValue ? (isSortAsc ? '↑' : '↓') : '';
+  }
+  const createHeaderCells = () => {
+    return headers.map(h => {
+      if (headerSlot && headerSlot[h.value]) return (
+        <TableCell
+          align={h.align || "left"}
+          key={h.value} onClick={() => h.sortable ? handleSort(h.value) : null}
+          sx={{ cursor: h.sortable ? 'pointer' : 'auto', ...h.sx }}
+        >
+          { headerSlot[h.value](h) }
+        </TableCell>
+      )
+      else return (
+        <TableCell
+          align={h.align || "left"}
+          key={h.value} onClick={() => h.sortable ? handleSort(h.value) : null}
+          sx={{ cursor: h.sortable ? 'pointer' : 'auto', ...h.sx }}
+        >
+          {h.text} { getSortArrow(h.value) }
+        </TableCell>
+      )
+    });
   }
   const createTableCells = (item) => {
     const entries = getSortedEntries(item);
@@ -115,15 +138,7 @@ const DataTable = ({
         <Table size={size}>
           <TableHead>
             <TableRow>
-              {headers.map(h => 
-                <TableCell
-                  align={h.align || "left"}
-                  key={h.value} onClick={() => h.sortable ? handleSort(h.value) : null}
-                  sx={{ cursor: h.sortable ? 'pointer' : 'auto', ...h.sx }}
-                >
-                  {h.text} { getSortArrow(h.value) }
-                </TableCell>
-              )}
+              { createHeaderCells() }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -150,6 +165,7 @@ DataTable.propTypes = {
   })),
   items: PropTypes.array,
   sx: PropTypes.object,
+  headerSlot: PropTypes.object,
   slot: PropTypes.object,
   size: PropTypes.oneOf(["medium", "small"]),
 }
@@ -158,6 +174,7 @@ DataTable.defaultProps = {
   headers: [],
   items: [],
   sx: {},
+  headerSlot: {},
   slot: {},
   searchable: false,
   size: 'medium',
