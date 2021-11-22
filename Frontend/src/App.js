@@ -10,7 +10,6 @@ import theme from './stylesheets/theme';
 import './stylesheets/App.scss';
 
 import AppBar from './components/Partials/AppBar';
-import Footer from './components/Partials/Footer';
 import { Box, Container } from '@mui/material';
 
 const App = () => { 
