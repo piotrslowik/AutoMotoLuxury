@@ -29,7 +29,7 @@ const Makes = () => {
       sortable: true,
     },
     {
-      text: 'Marka',
+      text: 'Pochodzenie',
       value: 'origin',
       align: 'center',
       sortable: true,
@@ -55,7 +55,7 @@ const Makes = () => {
   const fetchMakes = async () => {
     setIsLoading(true);
     const result = await getMakes();
-    setMakes(result);
+    setMakes(result.map(make => ({...make, origin: make.origin.origin})));
     setIsLoading(false);
   }
 
@@ -80,7 +80,6 @@ const Makes = () => {
   }
 
   const slots = {
-    origin: item => item.origin.origin,
     actions: item => getActionsCell(item),
   };
   const headerSlots = {
@@ -90,7 +89,7 @@ const Makes = () => {
   return (
     (isLoading)
     
-    ? <Loader color={theme.palette.primary.main} text="Wczytywanie paliw" />
+    ? <Loader color={theme.palette.primary.main} text="Wczytywanie marek" />
 
     : <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <DataTable

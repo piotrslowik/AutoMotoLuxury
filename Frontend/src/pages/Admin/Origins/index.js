@@ -41,7 +41,7 @@ const Origins = () => {
   }, [dispatch]);
 
   const setPageHeader = () => {
-    dispatch(helpersActions.setActionPageHeader("Typy paliw"));
+    dispatch(helpersActions.setActionPageHeader("Pochodzenia"));
   }
 
   const fetchOrigins = async () => {
@@ -81,7 +81,7 @@ const Origins = () => {
   return (
     (isLoading)
     
-    ? <Loader color={theme.palette.primary.main} text="Wczytywanie paliw" />
+    ? <Loader color={theme.palette.primary.main} text="Wczytywanie pochodzeń" />
 
     : <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <DataTable
