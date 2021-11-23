@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Table from '@mui/material/Table';
@@ -30,6 +30,10 @@ const DataTable = ({
   const [isSortAsc, setIsSortAsc] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  useEffect(() => {
+    setItems(items);
+  }, [items]);
 
   const handleSort = val => {
     setPage(0);

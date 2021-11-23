@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Divider, List, ListItem, ListItemIcon, ListItemText, Icon} from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCarSide } from '@fortawesome/free-solid-svg-icons'
 
 const ItemsDrawer = () => {
 
@@ -13,36 +15,41 @@ const ItemsDrawer = () => {
       {
         text: "Oferty",
         route: getRoute("offers"),
-        icon: "folder",
+        icon: <Icon>folder</Icon>,
       },
       {
         text: "Nowa oferta",
         route: getRoute("offers/new"),
-        icon: "create_new_folder",
+        icon: <Icon>create_new_folder</Icon>,
       },
     ],
     [
       {
         text: "Paliwa",
         route: getRoute("fuels"),
-        icon: "local_gas_station",
+        icon: <Icon>local_gas_station</Icon>,
       },
       {
         text: "Marki",
         route: getRoute("makes"),
-        icon: "directions_car_filled",
+        icon: <Icon>directions_car_filled</Icon>,
+      },
+      {
+        text: "Modele",
+        route: getRoute("models"),
+        icon: <FontAwesomeIcon style={{ width: '24px' }} icon={faCarSide} />,
       },
       {
         text: "Pochodzenia",
         route: getRoute("origins"),
-        icon: "flag",
+        icon: <Icon>flag</Icon>,
       },
     ],
     [
       {
         text: "Użytkownicy",
         route: getRoute("users"),
-        icon: "people",
+        icon: <Icon>people</Icon>,
       },
     ],
   ];
@@ -58,7 +65,7 @@ const ItemsDrawer = () => {
                   <Link key={item.route} to={item.route}>
                     <ListItem button>
                       <ListItemIcon>
-                        <Icon>{ item.icon }</Icon>
+                        { item.icon }
                       </ListItemIcon>
                       <ListItemText primary={item.text} />
                     </ListItem>
