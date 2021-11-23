@@ -7,6 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
@@ -17,6 +18,7 @@ const DataTable = ({
   headers,
   items,
   searchable,
+  searchPlaceholder,
   sx,
   headerSlot,
   slot,
@@ -26,8 +28,11 @@ const DataTable = ({
   const [sortValue, setSortValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
   const [isSortAsc, setIsSortAsc] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleSort = val => {
+    setPage(0);
     if (val === sortValue) {
       if (isSortAsc) {
         setIsSortAsc(false);
@@ -47,6 +52,7 @@ const DataTable = ({
     }
   }
   const handleSearch = () => {
+    setPage(0);
     const searchableValues = headers.filter(h => h.searchable).map(h => h.value);
     setItems(items.filter(item => searchComparer(item, searchableValues)));
   }
@@ -114,14 +120,25 @@ const DataTable = ({
     return headers.map(h => h.value);
   }
 
+  const getVisibleItems = () => {
+    return _items.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  }
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <React.Fragment>
       {searchable
       ? <Box sx={{ mb: 3, display: 'flex', width: '100%' }}>
           <TextField
             label="Szukaj"
-            placeholder="🔎︎ Wyszukaj wśród marek i modeli"
             variant="standard"
+            placeholder={searchPlaceholder}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyUp={handleSearchOnEnterKey}
@@ -142,13 +159,22 @@ const DataTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {_items.map((item, index) => 
+            {getVisibleItems().map((item, index) => 
               <TableRow key={index}>
                 { createTableCells(item) }
               </TableRow>
             )}
           </TableBody>
         </Table>
+        <TablePagination
+          component="div"
+          count={_items.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          // labelRowsPerPage="Wierszy na stronie"
+        />
       </TableContainer>
     </React.Fragment>
   );
@@ -163,6 +189,7 @@ DataTable.propTypes = {
     sortable: PropTypes.bool,
     sx: PropTypes.object,
   })),
+  searchPlaceholder: PropTypes.string,
   items: PropTypes.array,
   sx: PropTypes.object,
   headerSlot: PropTypes.object,

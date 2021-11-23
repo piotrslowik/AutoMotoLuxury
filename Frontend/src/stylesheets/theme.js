@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import { plPL } from '@mui/material/locale';
 
 const theme = createTheme({
   palette: {
@@ -54,6 +55,7 @@ const theme = createTheme({
       xl: 1904,
     },
   },
+  plPL,
 });
 
 export default theme;

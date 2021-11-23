@@ -98,6 +98,7 @@ const Makes = () => {
           slot={slots}
           headerSlot={headerSlots}
           searchable
+          searchPlaceholder={"🔎︎ Wyszukaj markę"}
         />
       </CardContent>
   );

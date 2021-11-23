@@ -136,6 +136,7 @@ const Offers = () => {
           headers={headers}
           items={offers}
           searchable
+          searchPlaceholder="🔎︎ Wyszukaj wśród marek i modeli"
           slot={slots}
         />
         <Snackbar

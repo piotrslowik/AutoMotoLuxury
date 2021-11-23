@@ -2,6 +2,18 @@
 @import '../stylesheets/variables.scss';
 @import "~react-image-gallery/styles/scss/image-gallery.scss";
 
+body {
+  &::-webkit-scrollbar {
+    width: 0.4em;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0,0,20, .25);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #8A8A91;
+  }
+}
+
 button {
   cursor: pointer;
 }
