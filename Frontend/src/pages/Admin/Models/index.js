@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
 
 import helpersActions from '../../../store/actions/helpers';
+import parametersActions from '../../../store/actions/parameters';
 
 import CardContent from '@mui/material/CardContent';
-import Fab from '@mui/material/Fab';
 import Icon from '@mui/material/Icon';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -15,6 +15,7 @@ import Select from '../../../components/Shared/Select';
 
 import { getMakes } from '../../../logic/graphql/make';
 import { getModels } from '../../../logic/graphql/model';
+import Actions from './actions';
 
 const Models = () => {
   const dispatch = useDispatch();
@@ -22,8 +23,7 @@ const Models = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [make, setMake] = useState('');
-  const [makes, setMakes] = useState([]);
-  const [models, setModels] = useState([]);
+  const { makes, models } = useSelector(state => state.parameters);
 
   const headers = [
     {
@@ -54,12 +54,14 @@ const Models = () => {
   const fetchMakes = async () => {
     setIsLoading(true);
     const result = await getMakes();
-    setMakes(result.map(make => ({ text: make.make, id: make._id})));
+    const makes = result.map(make => ({ text: make.make, id: make._id}));
+    dispatch(parametersActions.setMakes(makes));
     setIsLoading(false);
   }
   const fetchModels = async (make) => {
     const result = await getModels(make);
-    setModels(result.map(model => ({ ...model, make: model.make.make })));
+    const models = result.map(model => ({ ...model, make: model.make.make }));
+    dispatch(parametersActions.setModels(models));
   }
 
   const handleMakeChange = (make) => {
@@ -70,16 +72,7 @@ const Models = () => {
   const getActionsCell = (item) => {
     return (
       <div style={{marginTop: -8, marginBottom: -8 }}>
-        <Fab color="primary" size="small" onClick={() => {}}>
-          <Icon>
-            edit
-          </Icon>
-        </Fab>
-        <Fab color="primary" size="small" sx={{ ml: 2, backgroundColor: 'error.main', color: '#FFF' }} onClick={() => {}}>
-          <Icon>
-            delete
-          </Icon>
-        </Fab>
+        <Actions item={item} />
       </div>)
   }
 

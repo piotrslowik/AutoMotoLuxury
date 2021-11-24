@@ -5,6 +5,12 @@ export default {
       payload: makes,
     };
   },
+  setModels: models => {
+    return {
+      type: 'SET_MODELS',
+      payload: models,
+    };
+  },
   setFuels: fuels => {
     return {
       type: 'SET_FUELS',

@@ -2,6 +2,7 @@ const initialState = {
   fuels: [],
   origins: [],
   makes: [],
+  models: [],
 }
 
 const parametersReducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const parametersReducer = (state = initialState, action) => {
       return {
         ...state,
         makes: action.payload,
+      };
+    case 'SET_MODELS':
+      return {
+        ...state,
+        models: action.payload,
       };
     case 'CLEAR':
       return initialState;
