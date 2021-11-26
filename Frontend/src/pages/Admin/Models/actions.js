@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import helpers from '../../../store/actions/helpers';
+import parameters from '../../../store/actions/parameters';
 
 import DeleteButton from '../../../components/Dialogs/DeleteButton';
 import EditButton from '../../../components/Dialogs/EditButton';
 
-import { deleteModel } from '../../../logic/graphql/model';
+import { deleteModel, getModels } from '../../../logic/graphql/model';
 
-const Actions = ({ item }) => {
+const Actions = ({ item, makeId }) => {
+  const dispatch = useDispatch();
   const [dialog, setDialog] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -17,8 +22,22 @@ const Actions = ({ item }) => {
   }
 
   const handleDeleteModel = async () => {
-    // await deleteModel(item._id);
     setLoading(true);
+    try{
+      await deleteModel(item._id);
+      dispatch(helpers.setSnackbar({ message: 'Usunięto model', type: 'success' }));
+      fetchModels(makeId);
+    } catch (e) {
+      dispatch(helpers.setSnackbar({ message: 'Nie udało się usunąć modelu', type: 'error' }));
+    } finally {
+      setLoading(false);
+      setDialog(false);
+    }
+  }
+
+  const fetchModels = async (make) => {
+    const result = await getModels(make);
+    dispatch(parameters.setModels(result));
   }
 
   return (

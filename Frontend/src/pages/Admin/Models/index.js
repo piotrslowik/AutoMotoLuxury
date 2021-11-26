@@ -39,6 +39,13 @@ const Models = () => {
       sx: { width: '130px' },
     },
   ];
+
+  const items = () => {
+    return models.map(model => ({ ...model, make: model.make.make }))
+  }
+  const itemsMakes = () => {
+    return makes.map(make => ({ text: make.make, id: make._id}));
+  }
   
   useEffect(() => {
     fetchMakes();
@@ -54,14 +61,12 @@ const Models = () => {
   const fetchMakes = async () => {
     setIsLoading(true);
     const result = await getMakes();
-    const makes = result.map(make => ({ text: make.make, id: make._id}));
-    dispatch(parametersActions.setMakes(makes));
+    dispatch(parametersActions.setMakes(result));
     setIsLoading(false);
   }
   const fetchModels = async (make) => {
     const result = await getModels(make);
-    const models = result.map(model => ({ ...model, make: model.make.make }));
-    dispatch(parametersActions.setModels(models));
+    dispatch(parametersActions.setModels(result));
   }
 
   const handleMakeChange = (make) => {
@@ -72,7 +77,7 @@ const Models = () => {
   const getActionsCell = (item) => {
     return (
       <div style={{marginTop: -8, marginBottom: -8 }}>
-        <Actions item={item} />
+        <Actions item={item} makeId={make} />
       </div>)
   }
 
@@ -97,7 +102,7 @@ const Models = () => {
           <Grid item xs={12} md={6} lg={4}>
             <Select
             label="Marka"
-            items={makes}
+            items={itemsMakes()}
             value={make}
             onChange={handleMakeChange}
           />
@@ -106,7 +111,7 @@ const Models = () => {
         { make
           ? <DataTable
               headers={headers}
-              items={models}
+              items={items()}
               slot={slots}
               headerSlot={headerSlots}
               searchable

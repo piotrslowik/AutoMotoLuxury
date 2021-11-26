@@ -10,6 +10,7 @@ import theme from './stylesheets/theme';
 import './stylesheets/App.scss';
 
 import AppBar from './components/Partials/AppBar';
+import Snackbar from './components/Partials/Snackbar';
 import { Box, Container } from '@mui/material';
 
 const App = () => { 
@@ -21,6 +22,7 @@ const App = () => {
           <Container maxWidth="xl">
             <Router />
           </Container>
+          <Snackbar />
         </Box>
       </ThemeProvider>
     </Provider>

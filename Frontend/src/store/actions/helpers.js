@@ -5,6 +5,17 @@ export default {
       payload: header,
     };
   },
+  setSnackbar: snackbar => {
+    return {
+      type: 'SET_SNACKBAR',
+      payload: snackbar,
+    };
+  },
+  resetSnackbar: () => {
+    return {
+      type: 'RESET_SNACKBAR',
+    };
+  },
   clear: () => {
     return {
       type: 'CLEAR',

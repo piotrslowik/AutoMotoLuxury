@@ -1,5 +1,11 @@
 const initialState = {
   adminPageHeader: '',
+  snackbar: {
+    open: false,
+    message: '',
+    time: 3000,
+    type: '',
+  }
 }
 
 const helpersReducer = (state = initialState, action) => {
@@ -8,6 +14,20 @@ const helpersReducer = (state = initialState, action) => {
       return {
         ...state,
         adminPageHeader: action.payload,
+      };
+    case 'SET_SNACKBAR':
+      return {
+        ...state,
+        snackbar: {
+          ...initialState.snackbar,
+          ...action.payload,
+          open: true,
+        },
+      };
+    case 'RESET_SNACKBAR':
+      return {
+        ...state,
+        snackbar: initialState.snackbar,
       };
     case 'CLEAR':
       return initialState;

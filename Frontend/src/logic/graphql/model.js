@@ -51,7 +51,7 @@ export const deleteModel = async modelId => {
         return result.data.data.deleteModel.model;
     }
     catch (error) {
-        console.error(error);
+        throw error;
     }
 }
 
