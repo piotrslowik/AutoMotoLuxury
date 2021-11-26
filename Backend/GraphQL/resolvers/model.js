@@ -5,15 +5,13 @@ import { make, parseWithId } from './helpers.js';
 export default {
   models: async args => {
     try {
-      const models = await Model.find({makeId: args.makeId});
-      return models
-        .filter(model => !model.isDeleted)
-        .map(model => {
-          return { 
-            ...parseWithId(model),
-            make: make.bind(this, model._doc.makeId),
-          };
-        });
+      const models = await Model.find({ makeId: args.makeId, isDeleted: false });
+      return models.map(model => (
+        { 
+          ...parseWithId(model),
+          make: make.bind(this, model._doc.makeId),
+        }
+      ));
     }
     catch (error) {
       console.error(error);
@@ -24,6 +22,7 @@ export default {
     const model = new Model({
       model: args.modelInput.model,
       makeId: args.modelInput.makeId,
+      isDeleted: false,
     });
     try {
       const result = await model.save();
@@ -44,8 +43,8 @@ export default {
       model.makeId = args.modelEditInput.makeId;
       const result = await model.save();
       return {
-          ...parseWithId(result),
-          make: make.bind(this, result._doc.makeId),
+        ...parseWithId(result),
+        make: make.bind(this, result._doc.makeId),
       };
     }
     catch (error) {
@@ -58,6 +57,17 @@ export default {
       const model = await Model.findById(args.modelId);
       model.isDeleted = true;
       const result = await model.save();
+      return parseWithId(result);
+    }
+    catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+  hardDeleteModel: async args => {
+    try {
+      const model = await Model.findById(args.modelId);
+      await Model.deleteOne({_id: args.modelId});
       return parseWithId(model);
     }
     catch (error) {
