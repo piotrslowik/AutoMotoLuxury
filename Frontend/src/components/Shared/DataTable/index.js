@@ -13,6 +13,7 @@ import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const DataTable = ({
   headers,
@@ -23,6 +24,7 @@ const DataTable = ({
   headerSlot,
   slot,
   size,
+  loading,
 }) => {
   const [_items, setItems] = useState(items);
   const [sortValue, setSortValue] = useState('');
@@ -147,6 +149,7 @@ const DataTable = ({
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyUp={handleSearchOnEnterKey}
             sx={{ flexGrow: 1 }}
+            disabled={loading}
           />
           <IconButton size="small" sx={{ p: '10px' }} onClick={handleSearch}>
             <Icon>
@@ -156,6 +159,7 @@ const DataTable = ({
         </Box>
       : null }
       <TableContainer component={Paper} sx={sx}>
+        { loading ? <LinearProgress /> : null }
         <Table size={size}>
           <TableHead>
             <TableRow>
@@ -199,6 +203,7 @@ DataTable.propTypes = {
   headerSlot: PropTypes.object,
   slot: PropTypes.object,
   size: PropTypes.oneOf(["medium", "small"]),
+  loading: PropTypes.bool,
 }
 
 DataTable.defaultProps = {
@@ -209,6 +214,7 @@ DataTable.defaultProps = {
   slot: {},
   searchable: false,
   size: 'medium',
+  loading: false,
 }
 
 export default DataTable;

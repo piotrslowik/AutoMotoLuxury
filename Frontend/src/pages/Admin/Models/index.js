@@ -22,6 +22,7 @@ const Models = () => {
   const theme = useTheme();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingModels, setLoadingModels] = useState(false);
   const [make, setMake] = useState('');
   const { makes, models } = useSelector(state => state.parameters);
 
@@ -65,8 +66,11 @@ const Models = () => {
     setIsLoading(false);
   }
   const fetchModels = async (make) => {
+    setLoadingModels(true);
+    dispatch(parametersActions.setModels([]));
     const result = await getModels(make);
     dispatch(parametersActions.setModels(result));
+    setLoadingModels(false);
   }
 
   const handleMakeChange = (make) => {
@@ -95,7 +99,7 @@ const Models = () => {
   return (
     (isLoading)
     
-    ? <Loader color={theme.palette.primary.main} text="Wczytywanie modeli" />
+    ? <Loader color={theme.palette.primary.main} text="Wczytywanie marek" />
 
     : <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Grid container sx={{ mb: 2 }}>
@@ -116,6 +120,7 @@ const Models = () => {
               headerSlot={headerSlots}
               searchable
               searchPlaceholder={"🔎︎ Wyszukaj model"}
+              loading={loadingModels}
             />
           : null
         }     
