@@ -17,6 +17,7 @@ export default buildSchema(`
         photos: [String!]!,
         date: String!,
         creator: User,
+        isDeleted: Boolean
     }
     input OfferInput {
         make: String!,
@@ -40,6 +41,7 @@ export default buildSchema(`
         email: String!,
         password: String,
         createdOffers: [Offer!],
+        isDeleted: Boolean
     } 
     input UserInput {
         email: String!,
@@ -54,6 +56,7 @@ export default buildSchema(`
     type Origin {
         _id: ID!,
         origin: String!,
+        isDeleted: Boolean
     }
     input OriginInput {
         origin: String!,
@@ -67,6 +70,7 @@ export default buildSchema(`
         _id: ID!,
         make: String!,
         origin: Origin!,
+        isDeleted: Boolean
     }
     input MakeInput {
         make: String!,
@@ -82,6 +86,7 @@ export default buildSchema(`
         _id: ID!,
         model: String!,
         make: Make!,
+        isDeleted: Boolean
     }
     input ModelInput {
         model: String!,
@@ -96,6 +101,7 @@ export default buildSchema(`
     type Fuel {
         _id: ID!,
         fuel: String!,
+        isDeleted: Boolean
     }
     input FuelInput {
         fuel: String!,
