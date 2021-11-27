@@ -6,8 +6,6 @@ import helpersActions from '../../../store/actions/helpers';
 import parametersActions from '../../../store/actions/parameters';
 
 import CardContent from '@mui/material/CardContent';
-import Icon from '@mui/material/Icon';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import DataTable from '../../../components/Shared/DataTable';
 import Loader from '../../../components/Shared/Loader';
@@ -16,6 +14,7 @@ import Select from '../../../components/Shared/Select';
 import { getMakes } from '../../../logic/graphql/make';
 import { getModels } from '../../../logic/graphql/model';
 import Actions from './actions';
+import Add from './add';
 
 const Models = () => {
   const dispatch = useDispatch();
@@ -86,7 +85,7 @@ const Models = () => {
   }
 
   const getAddButton = () => {
-    return <Button startIcon={<Icon>add</Icon>} variant="outlined">Dodaj</Button>
+    return <Add makeId={make} />
   }
 
   const slots = {

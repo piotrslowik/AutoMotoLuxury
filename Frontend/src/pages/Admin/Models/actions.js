@@ -62,7 +62,7 @@ const Actions = ({ item, makeId }) => {
       dispatch(helpers.setSnackbar({ message: e, type: 'error' }));
     } finally {
       setLoading(false);
-      setModal(false);
+      closeModal();
     }
   }
 

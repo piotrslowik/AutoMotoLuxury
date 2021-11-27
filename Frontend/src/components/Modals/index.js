@@ -12,6 +12,8 @@ const Modal = ({
   header,
   onClose,
   children,
+  width,
+  minWidth,
   maxWidth,
 }) => {
   const [_open, setOpen] = useState(open);
@@ -54,6 +56,8 @@ const Modal = ({
             p: 3,
             m: 2,
             maxWidth,
+            minWidth,
+            width,
           }}
         >
           <div className="Modal__close" onClick={closeModal} >
@@ -85,6 +89,8 @@ Modal.propTypes = {
   onClose: PropTypes.func,
   children: PropTypes.node,
   maxWidth: PropTypes.number,
+  width: PropTypes.number,
+  minWidth: PropTypes.number,
 };
 
   export default Modal;
