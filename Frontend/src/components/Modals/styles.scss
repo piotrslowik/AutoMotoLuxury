@@ -6,10 +6,11 @@
     position: absolute;
     display: flex;
     justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     animation-name: show;
-    animation-duration: .4s;
+    animation-duration: .3s;
     z-index: 10;
 
     &__background {
@@ -21,40 +22,8 @@
     }
     
     &__content {
-        background: $modal-beige;
-        margin-top: 5px;
-        padding: 20px;
-        width: calc(100% - 10px);
-
-        @media (min-width: $tablet) {
-            margin-top: 10px;
-            padding: 40px;
-            width: calc(100% - 20px);
-        }
-
-        @media (min-width: $desktop) {
-            margin-top: 40px;    
-            width: calc(100% - 60px);
-        }
-        
-        @media (min-width: $desktop-hd) {
-            padding: 80px;
-            width: 1360px;
-        }
-        margin-bottom: auto;
         opacity: 1;
         position: relative;
-    }
-    
-    &__header {        
-        font-size: 28px;
-        margin-bottom: 20px;
-
-        @media (min-width: $tablet) {
-            font-size: 48px;
-            margin-bottom: 50px;
-        }
-        margin-top: 0;
     }
 
     &__close {
@@ -91,7 +60,7 @@
 
 .closing-modal {
     animation-name: hide;
-    animation-duration: .4s;
+    animation-duration: .34s;
 }
 
 @keyframes show {

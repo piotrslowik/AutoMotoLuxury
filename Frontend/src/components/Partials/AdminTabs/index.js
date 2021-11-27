@@ -31,6 +31,7 @@ const AdminTabs = ({ window, children }) => {
         sx={{
           zIndex: (theme) => theme.zIndex.drawer,
           backgroundColor: 'primary.dark',
+          zIndex: 1,
         }}
       >
         <Toolbar>
