@@ -90,7 +90,7 @@ const Actions = ({
           <TextField
             value={name}
             onChange={handleInput}
-            label="Nazwa modelu"
+            label="Nazwa"
             variant="standard"
             fullWidth
             inputProps={{ minLength: 1 }}

@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
 
 import helpersActions from '../../../store/actions/helpers';
+import parametersActions from '../../../store/actions/parameters';
 
 import CardContent from '@mui/material/CardContent';
-import Fab from '@mui/material/Fab';
-import Icon from '@mui/material/Icon';
-import Button from '@mui/material/Button';
 import DataTable from '../../../components/Shared/DataTable';
 import Loader from '../../../components/Shared/Loader';
 
+import Actions from './actions';
+import Add from './add';
+
 import { getMakes } from '../../../logic/graphql/make';
+import { getOrigins } from '../../../logic/graphql/origin';
 
 const Makes = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [makes, setMakes] = useState([]);
+  const { makes } = useSelector(state => state.parameters);
 
   const headers = [
     {
@@ -42,7 +44,10 @@ const Makes = () => {
   ];
   
   useEffect(() => {
+    setIsLoading(true);
     fetchMakes();
+    fetchOrigins();
+    setIsLoading(false);
   }, []);
   useEffect(() => {
     setPageHeader();
@@ -53,30 +58,27 @@ const Makes = () => {
   }
 
   const fetchMakes = async () => {
-    setIsLoading(true);
     const result = await getMakes();
-    setMakes(result.map(make => ({...make, origin: make.origin.origin})));
-    setIsLoading(false);
+    dispatch(parametersActions.setMakes(result));
+  }
+  const fetchOrigins = async () => {
+    const result = await getOrigins();
+    dispatch(parametersActions.setOrigins(result));
+  }
+
+  const makeItems = () => {
+    return makes.map(make => ({...make, origin: make.origin.origin}))
   }
 
   const getActionsCell = (item) => {
     return (
       <div style={{marginTop: -8, marginBottom: -8 }}>
-        <Fab color="primary" size="small" onClick={() => {}}>
-          <Icon>
-            edit
-          </Icon>
-        </Fab>
-        <Fab color="primary" size="small" sx={{ ml: 2, backgroundColor: 'error.main', color: '#FFF' }} onClick={() => {}}>
-          <Icon>
-            delete
-          </Icon>
-        </Fab>
+        <Actions item={item} />
       </div>)
   }
 
   const getAddButton = () => {
-    return <Button startIcon={<Icon>add</Icon>} variant="outlined">Dodaj</Button>
+    return <Add />
   }
 
   const slots = {
@@ -94,7 +96,7 @@ const Makes = () => {
     : <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <DataTable
           headers={headers}
-          items={makes}
+          items={makeItems()}
           slot={slots}
           headerSlot={headerSlots}
           searchable

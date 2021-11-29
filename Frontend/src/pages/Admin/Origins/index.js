@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@emotion/react';
 
 import helpersActions from '../../../store/actions/helpers';
+import parametersActions from '../../../store/actions/parameters';
 
 import CardContent from '@mui/material/CardContent';
-import Fab from '@mui/material/Fab';
-import Icon from '@mui/material/Icon';
-import Button from '@mui/material/Button';
 import DataTable from '../../../components/Shared/DataTable';
 import Loader from '../../../components/Shared/Loader';
+
+import Add from './add';
+import Actions from './actions';
 
 import { getOrigins } from '../../../logic/graphql/origin';
 
@@ -18,7 +19,7 @@ const Origins = () => {
   const theme = useTheme();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [origins, setOrigins] = useState([]);
+  const { origins } = useSelector(state => state.parameters);
 
   const headers = [
     {
@@ -47,28 +48,19 @@ const Origins = () => {
   const fetchOrigins = async () => {
     setIsLoading(true);
     const result = await getOrigins();
-    setOrigins(result);
+    dispatch(parametersActions.setOrigins(result));
     setIsLoading(false);
   }
 
   const getActionsCell = (item) => {
     return (
       <div style={{marginTop: -8, marginBottom: -8 }}>
-        <Fab color="primary" size="small" onClick={() => {}}>
-          <Icon>
-            edit
-          </Icon>
-        </Fab>
-        <Fab color="primary" size="small" sx={{ ml: 2, backgroundColor: 'error.main', color: '#FFF' }} onClick={() => {}}>
-          <Icon>
-            delete
-          </Icon>
-        </Fab>
+        <Actions item={item} />
       </div>)
   }
 
   const getAddButton = () => {
-    return <Button startIcon={<Icon>add</Icon>} variant="outlined">Dodaj</Button>
+    return <Add />
   }
 
   const slots = {

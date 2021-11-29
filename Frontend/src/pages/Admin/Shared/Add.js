@@ -15,6 +15,7 @@ const Add = ({
   handleAdd,
   label,
   onInput,
+  children,
  }) => {
   const [dialog, setDialog] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ const Add = ({
       >
         <DialogTitle>{ title }</DialogTitle>
         <DialogContent>
+          { children }
           <TextField
             value={name}
             onChange={handleInput}
