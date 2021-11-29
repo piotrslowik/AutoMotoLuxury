@@ -9,6 +9,7 @@ import Fuels from '../pages/Admin/Fuels';
 import Makes from '../pages/Admin/Makes';
 import Models from '../pages/Admin/Models';
 import Origins from '../pages/Admin/Origins';
+import Users from '../pages/Admin/Users';
 
 const AdminRouter = () => {
   const { path } = useRouteMatch();
@@ -22,6 +23,7 @@ const AdminRouter = () => {
         <Route exact path={`${path}/makes`} component={Makes} />
         <Route exact path={`${path}/models`} component={Models} />
         <Route exact path={`${path}/origins`} component={Origins} />
+        <Route exact path={`${path}/users`} component={Users} />
         <Redirect to="/404" />
       </Switch>
     </AdminTabs>
