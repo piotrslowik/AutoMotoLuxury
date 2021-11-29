@@ -19,6 +19,7 @@ const Actions = ({
   handleEdit,
   onEditInput,
   originalName,
+  children,
 }) => {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
@@ -87,6 +88,7 @@ const Actions = ({
       >
         <DialogTitle>{editDialogTitle}</DialogTitle>
         <DialogContent>
+          { children }
           <TextField
             value={name}
             onChange={handleInput}

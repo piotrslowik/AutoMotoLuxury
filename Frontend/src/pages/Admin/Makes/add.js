@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import helpers from '../../../store/actions/helpers';
 import parameters from '../../../store/actions/parameters';
 
+import Box from '@mui/material/Box';
 import Select from '../../../components/Shared/Select';
 import Add from '../Shared/Add';
 
@@ -47,11 +48,14 @@ const AddMake = () => {
       title="Dodaj markę"
       label="Nazwa marki"
     >
-      <Select
-        items={getOriginItems()}
-        value={origin}
-        onChange={val => setOrigin(val)}
-      />
+      <Box sx={{ my: 1 }}>
+        <Select
+          items={getOriginItems()}
+          value={origin}
+          onChange={val => setOrigin(val)}
+          label="Pochodzenie"
+        />
+      </Box>
     </Add>
   );
 }

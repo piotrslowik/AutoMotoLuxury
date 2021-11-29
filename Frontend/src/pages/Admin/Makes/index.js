@@ -67,7 +67,7 @@ const Makes = () => {
   }
 
   const makeItems = () => {
-    return makes.map(make => ({...make, origin: make.origin.origin}))
+    return makes.map(make => ({...make, origin: make.origin.origin, originId: make.origin._id}))
   }
 
   const getActionsCell = (item) => {

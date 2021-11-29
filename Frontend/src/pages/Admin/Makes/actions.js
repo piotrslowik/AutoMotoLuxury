@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import helpers from '../../../store/actions/helpers';
 import parameters from '../../../store/actions/parameters';
 
+import Box from '@mui/material/Box';
 import Actions from '../Shared/Actions';
+import Select from '../../../components/Shared/Select';
 
 import { deleteMake, editMake, getMakes } from '../../../logic/graphql/make';
 
 const MakeActions = ({ item }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState(item.make);
+  const [origin, setOrigin] = useState(item.originId);
+  const { origins } = useSelector(state => state.parameters);
 
   const handleDelete = async () => {
     try{
@@ -24,7 +28,7 @@ const MakeActions = ({ item }) => {
 
   const handleEdit = async () => {
     try{
-      const data = {make: name, originId: item.origin._id, makeId: item._id}
+      const data = {make: name, originId: origin, makeId: item._id}
       await editMake(data);
       fetchMakes();
     } catch (e) {
@@ -39,6 +43,13 @@ const MakeActions = ({ item }) => {
     dispatch(parameters.setMakes(result));
   }
 
+  const originItems = () => {
+    return origins.map(o => ({
+      text: o.origin,
+      id: o._id,
+    }));
+  }
+
   return (
     <Actions
       editValue={name}
@@ -48,7 +59,16 @@ const MakeActions = ({ item }) => {
       handleEdit={handleEdit}
       handleDelete={handleDelete}
       originalName={item.make}
-    />
+    >
+      <Box sx={{ my: 1 }}>
+        <Select
+          label="Pochodzenie"
+          value={origin}
+          onChange={val => setOrigin(val)}
+          items={originItems()}
+        />
+      </Box>
+    </Actions>
   );
 }
 
