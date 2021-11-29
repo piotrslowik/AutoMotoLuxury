@@ -47,25 +47,6 @@ const Error404 = () => {
         }}
       />
     </Box>
-    // <div className="Error404">
-    //   <div className="Error404__text">
-    //     <Typography
-    //       sx={{
-    //         color: 'primary.dark',
-    //         fontWeight: 900,
-    //         fontSize: {
-    //           xs: '9em',
-    //           md: '15em',
-    //           xl: '20em',
-    //         },
-    //       }}
-    //     >
-    //       404
-    //     </Typography>
-    //     <h1>404</h1>
-    //     <h2>Page not found</h2>
-    //   </div>
-    // </div>
   )
 }
 
