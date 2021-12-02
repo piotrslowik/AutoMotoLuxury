@@ -6,6 +6,7 @@ import AdminRoutes from './admin';
 
 import MainPage from '../pages/MainPage';
 import Offer from '../pages/Offer';
+import Contact from '../pages/Contact';
 import Error404 from '../pages/Error404';
 
 const AppRouter = () => {
@@ -13,6 +14,7 @@ const AppRouter = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={MainPage} />
+        <Route exact path="/contact" component={Contact} />
         <Route exact path="/offer/:offerId" component={Offer} />
         <Route path="/admin">
           <AdminRoutes />
