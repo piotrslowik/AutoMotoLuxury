@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { Container, Box, AppBar as Bar, Toolbar, Button, Icon, Fab } from '@mui/material';
+import { Container, Box, AppBar as Bar, Toolbar, Button, Icon, Fab, Link } from '@mui/material';
 import Logo from '../../Shared/Logo';
 
 const ContactIcon = () => {
@@ -34,14 +34,25 @@ const AppBar = () => {
             <Box sx={{ flexGrow: 1 }} />
             { matches 
             ? <React.Fragment>
-                <Button variant='outlined' color='white' sx={{ mr: 2 }} startIcon={<ContactIcon />}>Kontakt</Button>
+                <Link href="/contact" underline="none">
+                  <Button
+                    variant='outlined'
+                    color='white'
+                    sx={{ mr: 2 }}
+                    startIcon={<ContactIcon />}
+                  >
+                    Kontakt
+                  </Button>
+                </Link>
                 <Button variant='contained' sx={{ mr: 2 }}>Logowanie</Button>
                 <Button variant='contained'>Rejestracja</Button>
               </React.Fragment>
             : <React.Fragment>
-                <Fab color="white" aria-label="Kontakt" size="small" sx={{ mr: 2 }}>
-                  <ContactIcon />
-                </Fab>
+                <Link href="/contact" underline="none">
+                  <Fab color="white" aria-label="Kontakt" size="small" sx={{ mr: 2 }}>
+                    <ContactIcon />
+                  </Fab>
+                </Link>
                 <Fab color="white" aria-label="Logowanie" size="small" sx={{ mr: 2 }}>
                   <LoginIcon />
                 </Fab>
