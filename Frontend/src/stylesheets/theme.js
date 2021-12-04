@@ -28,10 +28,10 @@ const theme = createTheme({
       contrastText: '#FFF',
     },
     secondary: {
-      main: '#DDBC95',
-      light: '#F0E0C9',
-      dark: '#B38867',
-      contrastText: '#000',
+      main: '#FFBF60',
+      light: '#FAD5A5',
+      dark: '#E3963E',
+      contrastText: '#333',
     },
     white: {
       main: '#FFF',
