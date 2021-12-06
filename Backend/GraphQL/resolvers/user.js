@@ -1,24 +1,26 @@
 import User from '../../Models/user.js';
 
 import bcryptjs from 'bcryptjs';
-const { hash}  = bcryptjs;
+const { hash }  = bcryptjs;
 
 import { offers, parseWithId } from './helpers.js';
 
 export default {
   createUser: async args => {
     try {
-      const existingUser = await findOne({ email: args.userInput.email, isDeleted: false });
-      console.log(existingUser, args.userInput);
+      const existingUser = await User.findOne({ email: args.userInput.email, isDeleted: false });
       if (existingUser) {
-        throw new Error('User with that e-mail address already exists');
+        throw new Error('Użytkownik z tym emailem już istnieje');
       }
       else {
         const hashedPassword = await hash(args.userInput.password, 12);
         const newUser = new User({
           email: args.userInput.email,
           password: hashedPassword,
+          createdOffers: [],
+          observedOffers: [],
           isDeleted: false,
+          isAdmin: false,
         });
         const result = await newUser.save();
         return {
@@ -36,8 +38,8 @@ export default {
   },
   deleteUser: async args => {
     try {
-      const user = await findById(args.userId);
-      await deleteOne({_id: args.userId});
+      const user = await User.findById(args.userId);
+      await User.deleteOne({ _id: args.userId });
       return parseWithId(user);
     }
     catch (error) {

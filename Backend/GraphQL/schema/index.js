@@ -39,9 +39,11 @@ export default buildSchema(`
     type User {
         _id: ID!,
         email: String!,
-        password: String,
+        password: String!,
         createdOffers: [Offer!],
-        isDeleted: Boolean
+        observedOffers: [Offer!],
+        isDeleted: Boolean,
+        isAdmin: Boolean,
     } 
     input UserInput {
         email: String!,

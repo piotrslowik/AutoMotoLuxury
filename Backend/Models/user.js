@@ -16,7 +16,16 @@ const userSchema = new Schema ({
       ref: 'Offer',
     }
   ],
+  observedOffers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Offer',
+    }
+  ],
   isDeleted: {
+    type: Boolean,
+  },
+  isAdmin: {
     type: Boolean,
   },
 });

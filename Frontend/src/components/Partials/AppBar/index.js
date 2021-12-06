@@ -44,8 +44,16 @@ const AppBar = () => {
                     Kontakt
                   </Button>
                 </Link>
-                <Button variant='contained' sx={{ mr: 2 }}>Logowanie</Button>
-                <Button variant='contained'>Rejestracja</Button>
+                <Link href="/user/login" underline="none">
+                  <Button variant='contained' sx={{ mr: 2 }}>
+                    Logowanie
+                  </Button>
+                </Link>
+                <Link href="/user/register" underline="none">
+                  <Button variant='contained'>
+                    Rejestracja
+                  </Button>
+                </Link>
               </React.Fragment>
             : <React.Fragment>
                 <Link href="/contact" underline="none">
@@ -53,12 +61,16 @@ const AppBar = () => {
                     <ContactIcon />
                   </Fab>
                 </Link>
-                <Fab color="white" aria-label="Logowanie" size="small" sx={{ mr: 2 }}>
-                  <LoginIcon />
-                </Fab>
-                <Fab color="white" aria-label="Rejestracja" size="small">
-                  <RegisterIcon />
-                </Fab>
+                <Link href="/user/login" underline="none">
+                  <Fab color="white" aria-label="Logowanie" size="small" sx={{ mr: 2 }}>
+                    <LoginIcon />
+                  </Fab>
+                </Link>
+                <Link href="/user/register" underline="none">
+                  <Fab color="white" aria-label="Rejestracja" size="small">
+                    <RegisterIcon />
+                  </Fab>
+                </Link>
               </React.Fragment> }
           </Toolbar>
         </Container>

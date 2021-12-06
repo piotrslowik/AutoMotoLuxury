@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import AdminRoutes from './admin';
+import UserRoutes from './user';
 
 import MainPage from '../pages/MainPage';
 import Offer from '../pages/Offer';
@@ -18,6 +19,9 @@ const AppRouter = () => {
         <Route exact path="/offer/:offerId" component={Offer} />
         <Route path="/admin">
           <AdminRoutes />
+        </Route>
+        <Route path="/user">
+          <UserRoutes />
         </Route>
         <Route exact path="/404" component={Error404} />
         <Redirect to="/404" />
