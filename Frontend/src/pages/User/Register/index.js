@@ -11,18 +11,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Register = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [email, setEmail] = useState('test@test.pl');
-  const [password, setPassword] = useState('zaq1@WSX');
-  const [password2, setPassword2] = useState('zaq1@WSX');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isPassword2Valid, setIsPassword2Valid] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEmailInput = (e) => {
     setEmail(e.target.value);
@@ -60,11 +62,14 @@ const Register = () => {
   }
 
   const addUser = async () => {
+    setIsLoading(true);
     try {
       const result = await createUser(email, password);
       history.push(`/user/${result}`);
     } catch (e) {
       dispatch(helpers.setSnackbar({ message: e.message, type: 'error' }));
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -83,7 +88,7 @@ const Register = () => {
               type="email"
               value={email}
               onChange={handleEmailInput}
-              helperText={ isEmailValid ? null : "Powaj prawidłowy adres email" }
+              helperText={ isEmailValid ? null : "Podaj prawidłowy adres email" }
               error={!isEmailValid}
             />
             <TextField
@@ -106,6 +111,8 @@ const Register = () => {
               variant="contained"
               size="large"
               onClick={handleCreateUser}
+              disabled={isLoading}
+              startIcon={isLoading ? <CircularProgress size={20} /> : null}
             >
               Stwórz konto
             </Button>

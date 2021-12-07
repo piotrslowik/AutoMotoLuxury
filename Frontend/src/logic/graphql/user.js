@@ -8,26 +8,10 @@ export const createUser = async (email, pwd) => {
         password: "${pwd}",
       })
       {
-        __typename
-        ... on User
-        {
-          _id
-        }
-        ... on Error
-        {
-          message
-        }
-        ... on Errors
-        {
-          errors
-          {
-            message,
-            path,
-          }
-        }
+        _id,
       }
     }
-  `;
+`;
   try {
     const result = await Axios.post('http://localhost:8000/graphql', {
       query: query,
@@ -35,11 +19,11 @@ export const createUser = async (email, pwd) => {
         'Content-Type': 'application/json'
       }
     });
-    console.log(result.data.data);
-    //return result.data.data.createUser;
+    const newUserId = result.data.data.createUser;
+    if (newUserId) return newUserId;
+    throw new Error(result.data.errors[0].message);
   }
   catch (error) {
-    console.error(error);
     throw error;
   }
 }
