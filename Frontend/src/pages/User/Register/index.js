@@ -17,9 +17,9 @@ const Register = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
+  const [email, setEmail] = useState('test@test.pl');
+  const [password, setPassword] = useState('zaq1@WSX');
+  const [password2, setPassword2] = useState('zaq1@WSX');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isPassword2Valid, setIsPassword2Valid] = useState(true);

@@ -3,14 +3,17 @@ import User from '../../Models/user.js';
 import bcryptjs from 'bcryptjs';
 const { hash }  = bcryptjs;
 
-import { offers, parseWithId } from './helpers.js';
+import { offers, parseWithId, Error } from './helpers.js';
 
 export default {
   createUser: async args => {
     try {
       const existingUser = await User.findOne({ email: args.userInput.email, isDeleted: false });
       if (existingUser) {
-        throw new Error('Użytkownik z tym emailem już istnieje');
+        return {
+          __resolveType: 'Error',
+          ...new Error('Użytkownik z tym emailem już istnieje'),
+        };
       }
       else {
         const hashedPassword = await hash(args.userInput.password, 12);

@@ -99,3 +99,10 @@ export const parseOffer = offer => {
         creator: user.bind(this, offer._doc.creator),
     };
 }
+
+export class Error {
+  constructor(message, path = null) {
+    this.message = message;
+    this.path = path;
+  }
+}

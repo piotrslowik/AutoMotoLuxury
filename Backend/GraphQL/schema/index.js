@@ -54,6 +54,7 @@ export default buildSchema(`
     password: String,
     id: ID!,
   }
+  union UserResult = User | Error | Errors
 
   type Origin {
     _id: ID!,
@@ -113,6 +114,14 @@ export default buildSchema(`
     id: ID!,
   }
 
+  type Error {
+    message: String!,
+    path: String,
+  }
+  type Errors {
+    errors: [Error!],
+  }
+
   type RootQuery {
     offers: [Offer!]!
     offerDetails(offerId: ID!): Offer!
@@ -125,7 +134,7 @@ export default buildSchema(`
     createOffer(offerInput: OfferInput): Offer
     deleteOffer(offerId: ID!): Model
 
-    createUser(userInput: UserInput): User
+    createUser(userInput: UserInput): UserResult
 
     createOrigin(originInput: OriginInput): Origin
     editOrigin(originEditInput: OriginEditInput): Origin
