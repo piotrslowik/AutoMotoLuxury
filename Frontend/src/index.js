@@ -1,9 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import './stylesheets/index.css';
 import App from './App';
+import { LocalStorageGet } from './logic/helpers';
 
 import * as serviceWorker from './serviceWorker';
+
+axios.interceptors.request.use(config => {
+  const authHeaders = {
+    ...config.headers,
+    Authorization: `Bearer ${LocalStorageGet('token')}`,
+  };
+  return {
+    ...config,
+    headers: authHeaders,
+  };
+}, error => {
+  return Promise.reject(error);
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

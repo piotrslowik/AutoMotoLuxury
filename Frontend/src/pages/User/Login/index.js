@@ -1,4 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+
+import { login } from '../../../logic/graphql/user';
+import helpers from '../../../store/actions/helpers';
+import userActions from '../../../store/actions/user';
+import { LocalStorageGet } from '../../../logic/helpers';
 
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -11,14 +18,35 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEmailInput = (e) => {
     setEmail(e.target.value);
   }
   const handlePasswordInput = (e) => {
     setPassword(e.target.value);
+  }
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+    try {
+      await login(email, password);
+      dispatch(userActions.setUser({
+        token: LocalStorageGet('token'),
+        id: LocalStorageGet('userId'),
+        isAdmin: LocalStorageGet('isAdmin'),
+        loggedIn: true,
+      }));
+      history.push(`/`);
+    } catch (e) {
+      dispatch(helpers.setSnackbar({ message: e.message, type: 'error' }));
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -46,6 +74,8 @@ const Login = () => {
             <Button
               variant="contained"
               size="large"
+              onClick={handleLogin}
+              disabled={isLoading}
             >
               Zaloguj
             </Button>

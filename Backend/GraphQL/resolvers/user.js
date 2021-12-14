@@ -71,6 +71,7 @@ export default {
       });
       return {
         userId: user._id,
+        isAdmin: user.isAdmin,
         token,
         tokenExpiration: 1,
       };

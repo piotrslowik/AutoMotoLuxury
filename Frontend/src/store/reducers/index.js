@@ -3,6 +3,7 @@ import offer from './offer';
 import error from './error';
 import helpers from './helpers';
 import users from './users';
+import user from './user';
 import { combineReducers } from 'redux';
 
 const reducers = combineReducers({
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   error,
   helpers,
   users,
+  user,
 });
 
 export default reducers;

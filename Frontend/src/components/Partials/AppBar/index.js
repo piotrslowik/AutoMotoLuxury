@@ -1,6 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useSelector, useDispatch } from 'react-redux';
+import userActions from '../../../store/actions/user';
 
 import { Container, Box, AppBar as Bar, Toolbar, Button, Icon, Fab, Link } from '@mui/material';
 import Logo from '../../Shared/Logo';
@@ -23,7 +26,16 @@ const RegisterIcon = () => {
 
 const AppBar = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
+  const { loggedIn } = useSelector(state => state.user);
+
+  const logout = () => {
+    dispatch(userActions.clear());
+    localStorage.clear();
+    history.push(`/`);
+  }
 
   return (
     <Box sx={{ flexGrow: 1, mb: 3 }}>
@@ -44,16 +56,22 @@ const AppBar = () => {
                     Kontakt
                   </Button>
                 </Link>
-                <Link href="/user/login" underline="none">
-                  <Button variant='contained' sx={{ mr: 2 }}>
-                    Logowanie
+                { loggedIn
+                ? <Button variant='contained' onClick={logout}>
+                    Wyloguj
                   </Button>
-                </Link>
-                <Link href="/user/register" underline="none">
-                  <Button variant='contained'>
-                    Rejestracja
-                  </Button>
-                </Link>
+                : <React.Fragment>
+                    <Link href="/user/login" underline="none">
+                      <Button variant='contained' sx={{ mr: 2 }}>
+                        Logowanie
+                      </Button>
+                    </Link>
+                    <Link href="/user/register" underline="none">
+                      <Button variant='contained'>
+                        Rejestracja
+                      </Button>
+                    </Link>
+                  </React.Fragment>}
               </React.Fragment>
             : <React.Fragment>
                 <Link href="/contact" underline="none">

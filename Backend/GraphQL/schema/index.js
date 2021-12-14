@@ -117,6 +117,7 @@ export default buildSchema(`
     userId: ID!,
     token: String!,
     tokenExpiration: Int!,
+    isAdmin: Boolean,
   }
 
   type RootQuery {
@@ -126,7 +127,7 @@ export default buildSchema(`
     models(makeId: ID!): [Model!]!
     fuels: [Fuel!]!
     origins: [Origin!]!
-    login(email: String!, password: String!): AuthData!
+    login(email: String!, password: String!): AuthData
   }
   type RootMutation {
     createOffer(offerInput: OfferInput): Offer
