@@ -15,7 +15,8 @@ export default {
       throw error;
     }
   },
-  createFuel: async args => {
+  createFuel: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     const fuel = new Fuel({
       fuel: args.fuelInput.fuel,
       isDeleted: false,
@@ -29,7 +30,8 @@ export default {
       throw error;
     }
   },
-  editFuel: async args => {
+  editFuel: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const fuel = await Fuel.findById(args.fuelEditInput.id);
       fuel.fuel = args.fuelEditInput.fuel;
@@ -41,7 +43,8 @@ export default {
       throw error;
     }
   },
-  deleteFuel: async args => {
+  deleteFuel: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const fuel = await Fuel.findById(args.fuelId);
       fuel.isDeleted = true;
@@ -53,7 +56,8 @@ export default {
       throw error;
     }
   }, 
-  hardDeleteFuel: async args => {
+  hardDeleteFuel: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const fuel = await Fuel.findById(args.fuelId);
       await Fuel.deleteOne({_id: args.fuelId});

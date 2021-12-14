@@ -2,10 +2,6 @@ import User from '../../Models/user.js';
 
 import bcryptjs from 'bcryptjs';
 const { hash, compare }  = bcryptjs;
-
-import mongoose from 'mongoose';
-const { Error } = mongoose;
-
 import jwt from 'jsonwebtoken';
 
 import { offers, parseWithId } from './helpers.js';

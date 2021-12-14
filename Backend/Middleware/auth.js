@@ -11,7 +11,7 @@ export default (req, res, next) => {
     req.isAuth = false;
     return next();
   }
-  const decoded;
+  let decoded;
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
   } catch (err) {

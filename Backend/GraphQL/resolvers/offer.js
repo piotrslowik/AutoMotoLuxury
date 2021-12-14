@@ -24,7 +24,8 @@ export default {
       throw error;
     }
   },
-  createOffer: async args => {
+  createOffer: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     const offer = new Offer({
       makeId: args.offerInput.make,
       modelId: args.offerInput.model,
@@ -54,7 +55,8 @@ export default {
       throw error;
     }
   },
-  deleteOffer: async args => {
+  deleteOffer: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const offer = await Offer.findById(args.offerId);
       offer.isDeleted = true;
@@ -66,7 +68,8 @@ export default {
       throw error;
     }
   },
-  hardDeleteOffer: async args => {
+  hardDeleteOffer: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const offer = await Offer.findById(args.offerId);
       await Offer.deleteOne({_id: args.offerId});

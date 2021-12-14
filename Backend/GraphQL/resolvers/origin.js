@@ -13,7 +13,8 @@ export default {
       throw error;
     }
   },
-  createOrigin: async args => {
+  createOrigin: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     const origin = new Origin({
       origin: args.originInput.origin,
       isDeleted: false,
@@ -27,7 +28,8 @@ export default {
       throw error;
     }
   },
-  editOrigin: async args => {
+  editOrigin: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const origin = await Origin.findById(args.originEditInput.id);
       origin.origin = args.originEditInput.origin;
@@ -39,7 +41,8 @@ export default {
       throw error;
     }
   },
-  deleteOrigin: async args => {
+  deleteOrigin: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const origin = await Origin.findById(args.originId);
       origin.isDeleted = true;
@@ -51,7 +54,8 @@ export default {
       throw error;
     }
   },
-  hardDeleteOrigin: async args => {
+  hardDeleteOrigin: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const origin = await Origin.findById(args.originId);
       await Origin.deleteOne({_id: args.originId});

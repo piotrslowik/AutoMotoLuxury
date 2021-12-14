@@ -18,7 +18,8 @@ export default {
       throw error;
     }
   },
-  createMake: async args => {
+  createMake: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     const make = new Make({
       make: args.makeInput.make,
       originId: args.makeInput.originId,
@@ -36,7 +37,8 @@ export default {
       throw error;
     }
   },
-  editMake: async args => {
+  editMake: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const make = await Make.findById(args.makeEditInput.makeId);
       make.make = args.makeEditInput.make;
@@ -52,7 +54,8 @@ export default {
       throw error;
     }
   },
-  deleteMake: async args => {
+  deleteMake: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const make = await Make.findById(args.makeId);
       make.isDeleted = true;
@@ -65,7 +68,8 @@ export default {
     }
   },
   
-  hardDeleteMake: async args => {
+  hardDeleteMake: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const make = await Make.findById(args.makeId);
       await Make.deleteOne({_id: args.makeId});

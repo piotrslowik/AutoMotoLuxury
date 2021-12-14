@@ -18,7 +18,8 @@ export default {
       throw error;
     }
   },
-  createModel: async args => {
+  createModel: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     const model = new Model({
       model: args.modelInput.model,
       makeId: args.modelInput.makeId,
@@ -36,7 +37,8 @@ export default {
       throw error;
     }
   },
-  editModel: async args => {
+  editModel: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const model = await Model.findById(args.modelEditInput.modelId);
       model.model = args.modelEditInput.model;
@@ -52,7 +54,8 @@ export default {
       throw error;
     }
   },
-  deleteModel: async args => {
+  deleteModel: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const model = await Model.findById(args.modelId);
       model.isDeleted = true;
@@ -64,7 +67,8 @@ export default {
       throw error;
     }
   },
-  hardDeleteModel: async args => {
+  hardDeleteModel: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
     try {
       const model = await Model.findById(args.modelId);
       await Model.deleteOne({_id: args.modelId});
