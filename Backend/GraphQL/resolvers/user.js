@@ -1,11 +1,14 @@
 import User from '../../Models/user.js';
 
 import bcryptjs from 'bcryptjs';
-const { hash }  = bcryptjs;
+const { hash, compare }  = bcryptjs;
 
-import { offers, parseWithId } from './helpers.js';
 import mongoose from 'mongoose';
 const { Error } = mongoose;
+
+import jwt from 'jsonwebtoken';
+
+import { offers, parseWithId } from './helpers.js';
 
 export default {
   createUser: async args => {
@@ -51,4 +54,33 @@ export default {
       console.error(error);
     }
   },
+  login: async ({email, password}) => {
+    try {
+      const user = await User.findOne({ email, isDeleted: false });
+      if (user) {
+        const isValid = await compare(password, user.password);
+        if (!isValid) {
+          return new Error('Niepoprawny email lub hasło');
+        }
+      }
+      const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: '1h',
+      });
+      return {
+        userId: user._id,
+        token,
+        tokenExpiration: 1,
+      };
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
 }

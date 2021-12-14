@@ -113,6 +113,12 @@ export default buildSchema(`
     id: ID!,
   }
 
+  type AuthData {
+    userId: ID!,
+    token: String!,
+    tokenExpiration: Int!,
+  }
+
   type RootQuery {
     offers: [Offer!]!
     offerDetails(offerId: ID!): Offer!
@@ -120,6 +126,7 @@ export default buildSchema(`
     models(makeId: ID!): [Model!]!
     fuels: [Fuel!]!
     origins: [Origin!]!
+    login(email: String!, password: String!): AuthData!
   }
   type RootMutation {
     createOffer(offerInput: OfferInput): Offer
