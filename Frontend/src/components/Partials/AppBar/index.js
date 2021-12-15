@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSelector, useDispatch } from 'react-redux';
@@ -27,14 +26,13 @@ const RegisterIcon = () => {
 const AppBar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const history = useHistory();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const { loggedIn } = useSelector(state => state.user);
 
   const logout = () => {
     dispatch(userActions.clear());
     localStorage.clear();
-    history.push(`/`);
+    window.location.href="/";
   }
 
   return (

@@ -8,14 +8,17 @@ import { LocalStorageGet } from './logic/helpers';
 import * as serviceWorker from './serviceWorker';
 
 axios.interceptors.request.use(config => {
-  const authHeaders = {
-    ...config.headers,
-    Authorization: `Bearer ${LocalStorageGet('token')}`,
-  };
-  return {
-    ...config,
-    headers: authHeaders,
-  };
+  if (config.url.includes('localhost')) {
+    const authHeaders = {
+      ...config.headers,
+      Authorization: `Bearer ${LocalStorageGet('token')}`,
+    };
+    return {
+      ...config,
+      headers: authHeaders,
+    };
+  }
+  return config;
 }, error => {
   return Promise.reject(error);
 });
