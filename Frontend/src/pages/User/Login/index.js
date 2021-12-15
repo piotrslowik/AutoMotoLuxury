@@ -36,12 +36,7 @@ const Login = () => {
     setIsLoading(true);
     try {
       await login(email, password);
-      dispatch(userActions.setUser({
-        token: LocalStorageGet('token'),
-        id: LocalStorageGet('userId'),
-        isAdmin: LocalStorageGet('isAdmin'),
-        loggedIn: true,
-      }));
+      dispatch(userActions.setUser());
       history.push(`/`);
     } catch (e) {
       dispatch(helpers.setSnackbar({ message: e.message, type: 'error' }));

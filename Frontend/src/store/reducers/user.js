@@ -11,7 +11,10 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_USER':
       return {
-        user: action.payload,
+        token: LocalStorageGet('token'),
+        id: LocalStorageGet('userId'),
+        isAdmin: LocalStorageGet('isAdmin'),
+        loggedIn: true,
       };
     case 'CLEAR':
       return {

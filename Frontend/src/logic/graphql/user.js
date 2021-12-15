@@ -56,7 +56,7 @@ export const login = async (email, pwd) => {
     if (data) {
       LocalStorageSave('userId', data.userId);
       LocalStorageSave('token', data.token);
-      LocalStorageSave('admin', data.isAdmin);
+      LocalStorageSave('isAdmin', data.isAdmin);
     } else {
       throw new Error(result.data.errors[0].message);
     }
