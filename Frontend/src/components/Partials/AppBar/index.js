@@ -108,7 +108,9 @@ const AppBar = () => {
               { loggedIn
               ? <React.Fragment>
                 { isAdmin
-                ? <AdminButton matches={matches} />
+                ? <Link href="/admin/offers" underline="none">
+                    <AdminButton matches={matches} />
+                  </Link>
                 : null
                 }
                   <Profile />
