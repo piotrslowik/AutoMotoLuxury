@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useSelector } from 'react-redux';
+
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import AdminRoutes from './admin';
@@ -11,15 +13,18 @@ import Contact from '../pages/Contact';
 import Error404 from '../pages/Error404';
 
 const AppRouter = () => {
+  const { isAdmin } = useSelector(state => state.user);
+  
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/offer/:offerId" component={Offer} />
-        <Route path="/admin">
-          <AdminRoutes />
-        </Route>
+        { isAdmin ?
+          <Route path="/admin">
+            <AdminRoutes />
+          </Route> : null }
         <Route path="/user">
           <UserRoutes />
         </Route>

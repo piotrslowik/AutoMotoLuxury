@@ -16,6 +16,7 @@ const Error404 = () => {
             xl: '20em',
           },
           zIndex: 1,
+          textShadow: '0px 0px 50px white'
         }}
       >
         404
@@ -32,7 +33,7 @@ const Error404 = () => {
           position: 'absolute',
           top: '20%',
           zIndex: 1,
-          textShadow: '1px 1px 5px black'
+          textShadow: '1px 1px 10px black'
         }}
       >
         Strona miała kraksę...

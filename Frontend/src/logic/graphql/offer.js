@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-import { arrayToGraphQLString } from '../helpers';
+import { arrayToGraphQLString, LocalStorageGet } from '../helpers';
 
 export const addOffer = async (makeId, modelId, gen, fuelId, year, kms, volume, power, price, shortDesc, longDesc, folderName, images) => {
 
@@ -24,7 +24,7 @@ export const addOffer = async (makeId, modelId, gen, fuelId, year, kms, volume, 
                     longDescription: "${longDesc}",
                     photos: [${arrayToGraphQLString(imagesUrls)}],
                     date: "${date.toISOString()}",
-                    creator: "5da4fd3696b86f186c140515",
+                    creator: "${LocalStorageGet('userId')}",
                 })
                 {
                     _id
