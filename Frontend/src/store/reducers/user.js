@@ -3,7 +3,7 @@ import { LocalStorageGet } from "../../logic/helpers";
 const initialState = {
   token: LocalStorageGet('token'),
   id: LocalStorageGet('userId'),
-  isAdmin: LocalStorageGet('isAdmin'),
+  isAdmin: LocalStorageGet('isAdmin') === "true",
   loggedIn: LocalStorageGet('token') !== null,
 }
 
@@ -13,14 +13,14 @@ const userReducer = (state = initialState, action) => {
       return {
         token: LocalStorageGet('token'),
         id: LocalStorageGet('userId'),
-        isAdmin: LocalStorageGet('isAdmin'),
+        isAdmin: LocalStorageGet('isAdmin') === "true",
         loggedIn: true,
       };
     case 'CLEAR':
       return {
         token: null,
         id: null,
-        isAdmin: null,
+        isAdmin: false,
         loggedIn: false,
       };
     default:
