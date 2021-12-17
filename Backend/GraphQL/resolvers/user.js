@@ -53,11 +53,12 @@ export default {
   login: async ({email, password}) => {
     try {
       const user = await User.findOne({ email, isDeleted: false });
-      if (user) {
-        const isValid = await compare(password, user.password);
-        if (!isValid) {
-          return new Error('Niepoprawny email lub hasło');
-        }
+      if (!user) {
+        return new Error('Niepoprawny email lub hasło');
+      }
+      const isValid = await compare(password, user.password);
+      if (!isValid) {
+        return new Error('Niepoprawny email lub hasło');
       }
       const token = jwt.sign(
       {
@@ -78,6 +79,36 @@ export default {
     }
     catch (error) {
       console.error(error);
+    }
+  },
+  users: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
+    try {
+      const users = await User.find({ isDeleted: false });
+      return users.map(users => parseWithId(users));
+    }
+    catch (error) {
+      console.error(error);
+      return error;
+    }
+  },
+  changeRole: async (args, req) => {
+    if (!req.isAdmin) return new Error('Brak uprawnień administratora');
+    const isAdmin = args.userEditInput.isAdmin;
+    try {
+      // make sure we don't remove last admin
+      if (!isAdmin) {
+        const admins = await User.find({ isAdmin: true, isDeleted: false });
+        if (admins.length < 2 ) return new Error('Jesteś jedynym administratorem');
+      }
+      const user = await User.findOne({ _id: args.userEditInput.userId, isDeleted: false });
+      user.isAdmin = isAdmin;
+      const result = await user.save();
+      return parseWithId(result);
+    }
+    catch (error) {
+      console.error(error);
+      return error;
     }
   }
 }

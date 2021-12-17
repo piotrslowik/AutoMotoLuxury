@@ -52,7 +52,8 @@ export default buildSchema(`
   input UserEditInput {
     email: String,
     password: String,
-    id: ID!,
+    userId: ID!,
+    isAdmin: Boolean,
   }
 
   type Origin {
@@ -128,12 +129,15 @@ export default buildSchema(`
     fuels: [Fuel!]!
     origins: [Origin!]!
     login(email: String!, password: String!): AuthData
+    users: [User]!
   }
   type RootMutation {
     createOffer(offerInput: OfferInput): Offer
     deleteOffer(offerId: ID!): Model
 
     createUser(userInput: UserInput): User
+    editUser(userEditInput: UserEditInput): User
+    changeRole(userEditInput: UserEditInput): User
 
     createOrigin(originInput: OriginInput): Origin
     editOrigin(originEditInput: OriginEditInput): Origin

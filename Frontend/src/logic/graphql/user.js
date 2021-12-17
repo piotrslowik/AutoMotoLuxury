@@ -65,3 +65,85 @@ export const login = async (email, pwd) => {
     throw error;
   }
 }
+
+export const getUsers = async () => {
+  const query = `
+  query {
+    users {
+      _id,
+      email,
+      isAdmin
+    }
+  }
+  `;
+  try {
+    const result = await Axios.post('http://localhost:8000/graphql', {
+      query: query,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = result.data.data.users;
+    if (data) return data;
+    throw new Error(result.data.errors[0].message);
+  }
+  catch (error) {
+    throw error;
+  }
+}
+
+export const editUser = async (user) => {
+  const query = `
+    mutation {
+      editUser(userEditInput:{
+        _id: "${user._id}",
+        email: "${user.email}",
+        password: "${user.password}",
+      })
+      {
+        user
+      }
+    }
+  `;
+  try {
+    const result = await Axios.post('http://localhost:8000/graphql', {
+      query: query,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = result.data.data.users;
+    if (data) return data;
+    throw new Error(result.data.errors[0].message);
+  }
+  catch (error) {
+    throw error;
+  }
+}
+export const changeRole = async (userId, isAdmin) => {
+  const query = `
+    mutation {
+      changeRole(userEditInput:{
+        userId: "${userId}",
+        isAdmin: ${isAdmin},
+      })
+      {
+        _id
+      }
+    }
+  `;
+  try {
+    const result = await Axios.post('http://localhost:8000/graphql', {
+      query: query,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = result.data.data.changeRole;
+    if (data) return data;
+    throw new Error(result.data.errors[0].message);
+  }
+  catch (error) {
+    throw error;
+  }
+}

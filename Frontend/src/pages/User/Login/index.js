@@ -33,6 +33,7 @@ const Login = () => {
   }
 
   const handleLogin = async () => {
+    if (!(email && password)) return;
     setIsLoading(true);
     try {
       await login(email, password);
@@ -43,6 +44,9 @@ const Login = () => {
       setIsLoading(false);
     }
   }
+  const handleLoginOnEnterKey = (e) => {
+    if (e.keyCode === 13) handleLogin();
+  }
 
   return (
     <Container maxWidth="lg">
@@ -52,8 +56,14 @@ const Login = () => {
             Logowanie
           </Typography>
         </CardContent>
-        <CardContent>
-          <Stack maxWidth="sm" spacing={4} sx={{ margin: 'auto' }}>
+        <CardContent
+          onKeyUp={handleLoginOnEnterKey}
+        >
+          <Stack
+            maxWidth="sm"
+            spacing={4}
+            sx={{ margin: 'auto' }}
+          >
             <TextField
               label="E-mail"
               type="email"

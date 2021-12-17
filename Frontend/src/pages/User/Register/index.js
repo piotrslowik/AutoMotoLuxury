@@ -72,6 +72,9 @@ const Register = () => {
       setIsLoading(false);
     }
   }
+  const handleRegisterOnEnterKey = (e) => {
+    if (e.keyCode === 13) handleCreateUser();
+  }
 
   return (
     <Container maxWidth="lg">
@@ -81,8 +84,14 @@ const Register = () => {
             Rejestracja
           </Typography>
         </CardContent>
-        <CardContent>
-          <Stack maxWidth="sm" spacing={4} sx={{ margin: 'auto' }}>
+        <CardContent 
+          onKeyUp={handleRegisterOnEnterKey}
+        >
+          <Stack
+            maxWidth="sm"
+            spacing={4}
+            sx={{ margin: 'auto' }}
+          >
             <TextField
               label="E-mail"
               type="email"
