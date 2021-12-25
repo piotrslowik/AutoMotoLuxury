@@ -1,9 +1,13 @@
 export default {
-  setUser: user => {
+  setUser: () => {
     return {
       type: 'SET_USER',
-      payload: user,
     };
+  },
+  setFavorites: () => {
+    return {
+      type: 'SET_FAVORITES',
+    }
   },
   clear: () => {
     return {

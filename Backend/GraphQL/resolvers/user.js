@@ -8,6 +8,7 @@ import { offers, parseWithId } from './helpers.js';
 
 export default {
   createUser: async args => {
+    console.log("Creating user");
     try {
       if (args.userInput.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) === null) {
         return new Error('Podano nieprawidłowy adres email');
@@ -68,13 +69,18 @@ export default {
       },
       process.env.JWT_SECRET_KEY,
       {
-        expiresIn: '1h',
+        expiresIn: '24h',
       });
       return {
-        userId: user._id,
-        isAdmin: user.isAdmin,
+        user: {
+          _id: user._id,
+          isAdmin: user.isAdmin,
+          email: user.email,
+          observedOffers: user.observedOffers,
+          createdOffers: user.isAdmin ? user.createdOffers : null,
+        },
         token,
-        tokenExpiration: 1,
+        tokenExpiration: 24,
       };
     }
     catch (error) {
@@ -103,6 +109,25 @@ export default {
       }
       const user = await User.findOne({ _id: args.userEditInput.userId, isDeleted: false });
       user.isAdmin = isAdmin;
+      const result = await user.save();
+      return parseWithId(result);
+    }
+    catch (error) {
+      console.error(error);
+      return error;
+    }
+  },
+  toggleFavoriteOffer: async (args, req) => {
+    if (!req.isAuth) return new Error('Dodawać do ulubionych mogą tylko zalogowani użytkownicy');
+    const { userId, offerId } = args.favoritesInput;
+    if (req.userId !== userId) return new Error('Nie masz uprawnień do tej zmiany');
+    try {
+      const user = await User.findOne( { _id: userId, isDeleted: false });
+      if (!user) return new Error('To konto nie jest dostępne');
+      const favs = user.observedOffers;
+      if (favs.includes(offerId)) favs.remove(offerId);
+      else favs.push(offerId);
+      user.observedOffers = favs;
       const result = await user.save();
       return parseWithId(result);
     }

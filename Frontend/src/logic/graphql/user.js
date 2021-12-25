@@ -38,9 +38,15 @@ export const login = async (email, pwd) => {
         password: "${pwd}",
       )
       {
-        userId,
+        user {
+          _id,
+          isAdmin,
+          email,
+          observedOffers {
+            _id,
+          },
+        },
         token,
-        isAdmin,
         tokenExpiration,
       }
     }
@@ -54,9 +60,11 @@ export const login = async (email, pwd) => {
     });
     const data = result.data.data.login;
     if (data) {
-      LocalStorageSave('userId', data.userId);
+      LocalStorageSave('userId', data.user._id);
       LocalStorageSave('token', data.token);
-      LocalStorageSave('isAdmin', data.isAdmin);
+      LocalStorageSave('isAdmin', data.user.isAdmin);
+      LocalStorageSave('favorites', JSON.stringify(data.user.observedOffers));
+      LocalStorageSave('email', data.user.email);
     } else {
       throw new Error(result.data.errors[0].message);
     }
@@ -142,6 +150,37 @@ export const changeRole = async (userId, isAdmin) => {
     const data = result.data.data.changeRole;
     if (data) return data;
     throw new Error(result.data.errors[0].message);
+  }
+  catch (error) {
+    throw error;
+  }
+}
+export const toggleFavoriteOffer = async (userId, offerId) => {
+  const query = `
+    mutation {
+      toggleFavoriteOffer(favoritesInput: {
+        userId: "${userId}",
+        offerId: "${offerId}",
+      })
+      {
+        _id,
+        observedOffers
+        {
+          _id,
+        },
+      }
+    }
+  `;
+  try {
+    const result = await Axios.post('http://localhost:8000/graphql', {
+      query: query,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const favoriteOffers = result.data.data.toggleFavoriteOffer;
+    if (favoriteOffers) LocalStorageSave('favorites', JSON.stringify(favoriteOffers.observedOffers));
+    else throw new Error(result.data.errors[0].message);
   }
   catch (error) {
     throw error;

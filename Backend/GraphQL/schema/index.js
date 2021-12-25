@@ -55,6 +55,10 @@ export default buildSchema(`
     userId: ID!,
     isAdmin: Boolean,
   }
+  input FavoritesInput {
+    userId: ID!,
+    offerId: ID!,
+  }
 
   type Origin {
     _id: ID!,
@@ -115,10 +119,9 @@ export default buildSchema(`
   }
 
   type AuthData {
-    userId: ID!,
+    user: User!,
     token: String!,
     tokenExpiration: Int!,
-    isAdmin: Boolean,
   }
 
   type RootQuery {
@@ -138,6 +141,7 @@ export default buildSchema(`
     createUser(userInput: UserInput): User
     editUser(userEditInput: UserEditInput): User
     changeRole(userEditInput: UserEditInput): User
+    toggleFavoriteOffer(favoritesInput: FavoritesInput): User
 
     createOrigin(originInput: OriginInput): Origin
     editOrigin(originEditInput: OriginEditInput): Origin
