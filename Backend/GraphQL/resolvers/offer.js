@@ -14,6 +14,17 @@ export default {
       throw error;
     }
   },
+  offersOfId: async args => {
+    try {
+      const IDs = args.offersIds;
+      const offers = await Offer.find({ isDeleted: false, _id: { $in: IDs } });
+      return offers.map(offer => parseOffer(offer));
+    }
+    catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
   offerDetails: async args => {
     try {
       const offer = await Offer.findOne({ _id: args.offerId, isDeleted: false });

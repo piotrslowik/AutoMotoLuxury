@@ -135,5 +135,5 @@ export default {
       console.error(error);
       return error;
     }
-  }
+  },
 }

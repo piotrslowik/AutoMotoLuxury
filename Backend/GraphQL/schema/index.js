@@ -127,6 +127,7 @@ export default buildSchema(`
   type RootQuery {
     offers: [Offer!]!
     offerDetails(offerId: ID!): Offer!
+    offersOfId(offersIds: [ID!]!): [Offer!]!
     makes: [Make!]!
     models(makeId: ID!): [Model!]!
     fuels: [Fuel!]!
@@ -136,7 +137,7 @@ export default buildSchema(`
   }
   type RootMutation {
     createOffer(offerInput: OfferInput): Offer
-    deleteOffer(offerId: ID!): Model
+    deleteOffer(offerId: ID!): Offer
 
     createUser(userInput: UserInput): User
     editUser(userEditInput: UserEditInput): User

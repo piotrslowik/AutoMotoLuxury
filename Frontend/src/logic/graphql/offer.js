@@ -113,6 +113,47 @@ export const getOffers = async (filterSetup) => {
         return [];
     }
 }
+export const getOffersByIdList = async (offersIDs) => {
+  const query = `
+    query {
+      offersOfId (offersIds: ${arrayToGraphQLString(offersIDs)}) 
+      {
+        _id,
+        make {
+          make
+        },
+        model {
+          model
+        },
+        fuel {
+          fuel
+        },
+        generation,
+        price,
+        power,
+        year,
+        volume,
+        kms,
+        photos,
+        shortDescription,
+        date,     
+      }
+    }
+  `;
+  try {
+    const result = await Axios.post('http://localhost:8000/graphql', {
+      query: query,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const offers = result.data.data.offersOfId;
+    if (offers) return offers;
+    else throw new Error(result.data.errors[0].message);
+  } catch (error) {
+    throw error;
+  }
+}
 export const getOfferDetails = async offerId => {
     const query = `
     query {
