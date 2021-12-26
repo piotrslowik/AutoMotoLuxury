@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { getFuels } from '../../../logic/graphql/fuel';
 import { getOrigins } from '../../../logic/graphql/origin';
@@ -7,7 +10,7 @@ import { getMakes } from '../../../logic/graphql/make';
 
 import parametersActions from '../../../store/actions/parameters';
 
-import { Card, CardContent, Typography, Grid, TextField, Button } from '@mui/material';
+import { AccordionDetails, AccordionSummary as MuiAccordionSummary , Typography, Grid, TextField, Button, Accordion, Icon } from '@mui/material';
 
 import { getModels } from '../../../logic/graphql/model';
 import SingleSelect from '../../Shared/Select';
@@ -33,11 +36,19 @@ const Filters = () => {
   const [yearMin, setYearMin] = useState('');
   const [yearMax, setYearMax] = useState('');
 
+  const theme = useTheme();
   const dispatch = useDispatch();
-
+  
+  const matches = useMediaQuery(theme.breakpoints.up('lg'));
+  const [open, setOpen] = useState(matches);
+  
   useEffect(() => {
     fetchParameters();
   }, [dispatch]);
+
+  useEffect(() => {
+    setOpen(matches);
+  }, [matches]);
 
   useEffect(() => {
     if (make !== dummyObj.id) {
@@ -98,9 +109,12 @@ const Filters = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <Card>
+    <Accordion expanded={open} onChange={() => setOpen(!open)} disableGutters>
+      <AccordionSummary>
+        <Typography variant='h5' ml={2}>Filtry</Typography>
+      </AccordionSummary>
       {loading ? null :(
-      <CardContent>
+      <AccordionDetails>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <Grid item xs={12}>
@@ -160,7 +174,7 @@ const Filters = () => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} lg={12} xl={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                 Przebieg
@@ -174,6 +188,7 @@ const Filters = () => {
                 onChange={e => setKmsMin(e.target.value)}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0', max: '999999', "aria-autocomplete": "off" }}
                 sx={{ flexGrow: 1 }}
+                placeholder='od'
               />
               <TextField 
                 variant="outlined"
@@ -182,10 +197,11 @@ const Filters = () => {
                 onChange={e => setKmsMax(e.target.value)}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0', max: '999999', "aria-autocomplete": "off" }}
                 sx={{ ml: 2, flexGrow: 1 }}
+                placeholder='do'
               />
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} lg={12} xl={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                 Cena
@@ -199,6 +215,7 @@ const Filters = () => {
                 onChange={e => setPriceMin(e.target.value)}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0', max: '999999', "aria-autocomplete": "off" }}
                 sx={{ flexGrow: 1 }}
+                placeholder='od'
               />
               <TextField 
                 variant="outlined"
@@ -207,10 +224,11 @@ const Filters = () => {
                 onChange={e => setPriceMax(e.target.value)}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0', max: '999999', "aria-autocomplete": "off" }}
                 sx={{ ml: 2, flexGrow: 1 }}
+                placeholder='do'
               />
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} lg={12} xl={6}>
             <Grid item xs={12}>
               <Typography fontWeight='700' ml={2}>
                 Rocznik
@@ -224,6 +242,7 @@ const Filters = () => {
                 onChange={e => setYearMin(e.target.value)}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', max: currentYear.toString(), "aria-autocomplete": "off" }}
                 sx={{ flexGrow: 1 }}
+                placeholder='od'
               />
               <TextField 
                 variant="outlined"
@@ -232,6 +251,7 @@ const Filters = () => {
                 onChange={e => setYearMax(e.target.value)}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', max: currentYear.toString(), "aria-autocomplete": "off" }}
                 sx={{ ml: 2, flexGrow: 1 }}
+                placeholder='do'
               />
             </Grid>
           </Grid>
@@ -247,10 +267,29 @@ const Filters = () => {
             </Button>
           </Grid>
         </Grid>
-      </CardContent>
+      </AccordionDetails>
       )}
-    </Card>
+    </Accordion>
   )
 }
+
+const AccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={ <Icon sx={{ color: 'black', ml: '40px' }}>filter_list</Icon> }
+    {...props}
+  />
+))(({ theme }) => ({
+  flexDirection: 'row-reverse',
+  '& .MuiAccordionSummary-expandIconWrapper': {
+    transition: 'opacity .4s',
+  },
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+    opacity: 0,
+    transform: 'unset',
+  },
+  '& .MuiAccordionSummary-content': {
+    marginLeft: theme.spacing(1),
+  },
+}));
 
 export default Filters;
