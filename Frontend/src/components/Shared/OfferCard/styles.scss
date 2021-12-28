@@ -1,64 +1,52 @@
 @import '../../../stylesheets/variables.scss';
 
-.OfferCard {
-    width: 100%;
-    height: 100px;
-    @media (min-width: $tablet) {
-        height: 150px;
-    }
-    @media (min-width: $desktop) {
-        height: 200px;
-    }
-    background: $light-grey;
-    display: flex;
-    cursor: default;
-    transition: filter .3s;
+// .OfferCard {
+//     width: 100%;
+//     height: 100px;
+//     @media (min-width: $tablet) {
+//         height: 150px;
+//     }
+//     @media (min-width: $desktop) {
+//         height: 200px;
+//     }
+//     background: $light-grey;
+//     display: flex;
+//     cursor: default;
+//     transition: filter .3s;
 
-    &-Link {
-        text-decoration: none;
-        color: unset;
-    }
-}
+//     &-Link {
+//         text-decoration: none;
+//         color: unset;
+//     }
+// }
 
 @media (min-width: $desktop) {
-    .OfferCard:hover {
-        filter: brightness(110%);
-    }
+  .OfferCard:hover {
+    box-sizing: 4px 4px 12px black;
+  }
 }
 
-.image {
-    position: relative;
-}
+.OfferCardImage {
+  position: relative;
 
-.image:hover .image__overlay {
+  &:hover &__overlay {
     bottom: 0;
     height: 100%;
-}
+  }
 
-.image__pic {
-    height: 100%;
-    width: 100px;
-    @media (min-width: 400px) {
-        width: 140px;
-    }
-    @media (min-width: 500px) {
-        width: 200px;
-    }
-    @media (min-width: $tablet) {
-        width: 260px;
-    }
-    @media (min-width: $desktop) {
-        width: 400px;
-    }
-    object-fit: cover;
-}
+  &:hover &__image {
+    filter: blur(4px);
+  }
 
-.image__overlay {
+  &__image {
+    transition: filter .3s;
+  }
+
+  &__overlay {
     position: absolute;
     bottom: 100%;
     left: 0;
     right: 0;
-    background-color: $dark-blue;
     filter: opacity(.8);
     overflow: hidden;
     width: 100%;
@@ -66,111 +54,15 @@
     transition: .3s ease;
   }
 
-.image__text {
+  &__text {
     width: 80%;
     text-align: justify;
     color: white;
-    font-size: 9px;
-    @media (min-width: $tablet) {
-        font-size: 12px;
-    }
-    @media (min-width: $desktop) {
-        font-size: 15px;
-    }
     position: absolute;
     overflow: hidden;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-.details {
-    margin-left: 10px;
-    @media (min-width: $desktop) {
-        margin-left: 30px;
-    }
-    width: 100%;
-    font-size: 9px;
-    @media (min-width: $tablet) {
-        font-size: 14px;
-    }
-    @media (min-width: $desktop) {
-        font-size: 18px;
-    }
-}
-
-.details__header {
-    display: grid;
-    // grid-template-rows: 20px 25px;
-    grid-row-gap: 3px;
-    @media (min-width: $desktop) {
-        grid-template-rows: 25px 30px;
-        grid-row-gap: 5px;
-    }
-    @media (min-width: $desktop) {
-        grid-template-rows: 30px 35px;
-        grid-row-gap: 7px;
-    }
-    margin-top: 5px;
-    @media (min-width: $desktop) {
-        margin-top: 20px;
-    }
-}
-
-.details__make {
-    font-size: 1.4em;
-    margin: 0;
-    text-transform: uppercase;
-    grid-row: 1 / 2;
-    grid-column: 1 / 2;
-}
-
-.details__model {
-    font-size: 1.7em;
-    margin: 0;
-    text-transform: uppercase;
-    grid-row: 2 / 3;
-    grid-column: 1 / 2;
-}
-
-.details__price {
-    grid-row: 1 / 3;
-    grid-column: 2 / 3;
-    text-align: right;
-    margin-right: 30px;
-    margin-top: 0px;
-    font-size: 2em;
-    font-weight: 500;
-    color: $dark-blue;
-    text-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-}
-
-.details__price--pln {
-    font-size: .6em;
-    margin-left: 5px;
-}
-
-.details__engine {
-    display: flex;
-    justify-content: space-between;
-    margin: 6px 20px 6px 0;
-    font-size: 1.3em;
-    @media (min-width: $desktop) {
-        margin: 20px 200px 20px 0;
-        font-size: 1.1em
-    }
-}
-
-.details__bottom p, .details__engine p {
-    margin: 0;
-}
-
-.details__bottom {
-    display: flex;
-    justify-content: space-between;
-    margin-right: 50%;
-    font-size: 1.3em;
-    @media (min-width: $desktop) {
-        font-size: 1.1em
-    }
+    text-shadow: 0px 0px 2px black;
+  }
 }

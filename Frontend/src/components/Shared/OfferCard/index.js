@@ -7,6 +7,7 @@ import axios from 'axios';
 const OfferCard = ({ offer }) => {
   const { _id, photos, shortDescription, make, model, price, fuel, volume, power, year, kms } = offer;
   const [photoUrl, setPhotoUrl] = useState('/no-image.jpg');
+  const [elevation, setElevation] = useState(1);
 
   useEffect(async () => {
     try {
@@ -17,12 +18,24 @@ const OfferCard = ({ offer }) => {
 
   return (
     <Link href={`/offer/${_id}`} sx={{ width: '100%' }}>
-      <Card sx={{ display: 'flex' }}>
+      <Card
+        sx={{ display: 'flex' }}
+        className="OfferCard"
+        elevation={elevation}
+        onMouseEnter={() => setElevation(5)}
+        onMouseLeave={() => setElevation(1)}
+      >
         <Grid container>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} className='OfferCardImage'>
             <Box
               sx={{ width: '100%', height: '100%', minHeight: 180, backgroundImage: `url(${photoUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              className='OfferCardImage__image'
             />
+            <Box className='OfferCardImage__overlay' sx={{ backgroundColor: 'primary.dark' }}>
+              <Typography className='OfferCardImage__text' variant='caption'>
+                { shortDescription }
+              </Typography>
+            </Box>
           </Grid>
           <Grid item xs>
             <CardContent>
@@ -83,37 +96,6 @@ const OfferCard = ({ offer }) => {
       </Card>
     </Link>
   );
-
-  // return (
-  //   <Link to={`/offer/${_id}`} className="OfferCard-Link">
-  //     <div className="OfferCard">
-  //       <div className="image">
-  //         <img src={photos[0]} alt="main" className="image__pic" />
-  //         <div className="image__overlay">
-  //           <div className="image__text">
-  //             {shortDescription}
-  //           </div>
-  //         </div>
-  //       </div>
-  //       <div className="details">
-  //         <div className="details__header">
-  //           <p className="details__make">{make.make}</p>
-  //           <p className="details__model">{model.model}</p>
-  //           <p className="details__price">{formatNumber(price)}<span className="details__price--pln"> PLN</span></p>
-  //         </div>
-  //         <div className="details__engine">
-  //           <p>{fuel.fuel}</p>
-  //           <p>{volume} cm³</p>
-  //           <p>{power} KM</p>
-  //         </div>
-  //         <div className="details__bottom">
-  //         <p>{year}</p>
-  //           <p>{formatNumber(kms)} km</p>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </Link>
-  // );
 }
 
 export default OfferCard;
