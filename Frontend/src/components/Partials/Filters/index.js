@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import { useTheme } from '@mui/material';
+import { IconButton, Toolbar, useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { getFuels } from '../../../logic/graphql/fuel';
@@ -10,7 +10,7 @@ import { getMakes } from '../../../logic/graphql/make';
 
 import parametersActions from '../../../store/actions/parameters';
 
-import { AccordionDetails, AccordionSummary as MuiAccordionSummary , Typography, Grid, TextField, Button, Accordion, Icon } from '@mui/material';
+import { AccordionDetails, AccordionSummary as MuiAccordionSummary , Typography, Grid, TextField, Button, Accordion, Icon, Box, Tooltip } from '@mui/material';
 
 import { getModels } from '../../../logic/graphql/model';
 import SingleSelect from '../../Shared/Select';
@@ -104,6 +104,20 @@ const Filters = () => {
       const filtered = arr.filter(make => make.origin._id === origin);
       return formatArray(filtered, field);
     }
+  }
+
+  const resetFilters = () => {
+    setModels([]);
+    setFuel(dummyObj.id);
+    setModel(dummyObj.id);
+    setMake(dummyObj.id);
+    setOrigin(dummyObj.id);
+    setKmsMax('');
+    setKmsMin('');
+    setPriceMin('');
+    setPriceMax('');
+    setYearMin('');
+    setYearMax('');
   }
 
   const currentYear = new Date().getFullYear();
@@ -255,16 +269,29 @@ const Filters = () => {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Button
-              color="secondary"
-              variant="contained"
-              size="large"
-              fullWidth
-              sx={{ mt: 4 }}
-            >
-              Filtruj
-            </Button>
+          <Grid item xs={12} sm={6} md={12} xl={6}>
+            <Box sx={{ mt: 4, display: 'flex' }}>
+              <Button
+                color="secondary"
+                variant="contained"
+                size="large"
+                sx={{ flexGrow: 1 }}
+              >
+                Filtruj
+              </Button>
+              <Tooltip title="Resetuj filtry">
+                <Button
+                  sx={{ ml: 1 }}
+                  size="large"
+                  variant="outlined"
+                  onClick={resetFilters}
+                >
+                  <Icon>
+                    filter_list_off
+                  </Icon>
+                </Button>
+              </Tooltip>
+            </Box>
           </Grid>
         </Grid>
       </AccordionDetails>
