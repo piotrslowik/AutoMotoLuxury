@@ -314,7 +314,6 @@ const NewOffer = () => {
               Długi opis
             </Typography>
             <TextareaAutosize
-              placeholder="Długi opis"
               style={{ width: '100%', fontSize: theme.typography.fontSize + 4, fontFamily: theme.typography.fontFamily, padding: 12, marginTop: 4 }}
               value={longDesc}
               minRows={3}

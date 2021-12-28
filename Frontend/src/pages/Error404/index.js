@@ -46,6 +46,7 @@ const Error404 = () => {
           right: '10px',
           width: '70%',
         }}
+        alt='Broken car'
       />
     </Box>
   )

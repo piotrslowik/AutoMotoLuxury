@@ -5,7 +5,6 @@ import { useHistory } from 'react-router';
 import { login } from '../../../logic/graphql/user';
 import helpers from '../../../store/actions/helpers';
 import userActions from '../../../store/actions/user';
-import { LocalStorageGet } from '../../../logic/helpers';
 
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
