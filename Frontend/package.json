@@ -1,6 +1,6 @@
 {
-  "name": "komis",
-  "version": "0.1.0",
+  "name": "auto_moto_luxury_frontend",
+  "version": "0.9.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
