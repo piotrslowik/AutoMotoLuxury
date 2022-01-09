@@ -25,6 +25,42 @@ export default {
       throw error;
     }
   },
+  filteredOffers: async args => {
+    try {
+      const {
+        fuel,
+        model,
+        make,
+        origin,
+        kmsMin,
+        kmsMax,
+        priceMin,
+        priceMax,
+        yearMin,
+        yearMax,
+      } = args.filterSetup;
+      const findFilter = {};
+      if (kmsMin || kmsMax) findFilter.kms = {};
+      if (priceMin || priceMax) findFilter.price = {};
+      if (yearMin || yearMax) findFilter.year = {};
+      if (fuel) findFilter.fuelId = fuel;
+      if (model) findFilter.modelId = model;
+      if (make) findFilter.makeId = make;
+      if (origin) findFilter.originId = origin;
+      if (kmsMin) findFilter.kms.$gte = kmsMin;
+      if (kmsMax) findFilter.kms.$lte = kmsMax;
+      if (priceMin) findFilter.price.$gte = priceMin;
+      if (priceMax) findFilter.price.$lte = priceMax;
+      if (yearMin) findFilter.year.$gte = yearMin;
+      if (yearMax) findFilter.year.$lte = yearMax;
+      const offers = await Offer.find({ isDeleted: false, ...findFilter });
+      return offers.map(offer => parseOffer(offer));
+    }
+    catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
   offerDetails: async args => {
     try {
       const offer = await Offer.findOne({ _id: args.offerId, isDeleted: false });

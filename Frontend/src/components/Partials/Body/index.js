@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
+import offersActions from '../../../store/actions/offers';
+
 import OfferCard from '../../Shared/OfferCard';
 import Loader from '../../Shared/Loader';
 import Grid from '@mui/material/Grid';
@@ -8,7 +11,9 @@ import { getOffers } from '../../../logic/graphql/offer';
 import { Typography } from '@mui/material';
 
 const Body = () => {
-  const [offers, setOffers] = useState([]);
+  const dispatch = useDispatch();
+
+  const offers = useSelector(state => state.offers);
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
@@ -17,7 +22,7 @@ const Body = () => {
   
   const fetchOffers = async () => {
     const result = await getOffers();
-    setOffers(result);
+    dispatch(offersActions.setOffers(result));
     setIsLoading(false);
   }
 

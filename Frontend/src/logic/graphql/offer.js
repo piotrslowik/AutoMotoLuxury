@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-import { arrayToGraphQLString, LocalStorageGet } from '../helpers';
+import { arrayToGraphQLString, LocalStorageGet, objectToGraphQLString } from '../helpers';
 
 export const addOffer = async (makeId, modelId, gen, fuelId, year, kms, volume, power, price, shortDesc, longDesc, folderName, images) => {
 
@@ -73,8 +73,8 @@ const getImagesUrls = async (images, folderName) => {
     }
 }
 
-export const getOffers = async (filterSetup) => {
-    const query = `
+export const getOffers = async () => {
+  const query = `
     query {
         offers {
             _id,
@@ -148,6 +148,47 @@ export const getOffersByIdList = async (offersIDs) => {
       }
     });
     const offers = result.data.data.offersOfId;
+    if (offers) return offers;
+    else throw new Error(result.data.errors[0].message);
+  } catch (error) {
+    throw error;
+  }
+}
+export const getFilteredOffers = async (filterSetup) => {
+  const query = `
+    query {
+      filteredOffers (filterSetup: ${objectToGraphQLString(filterSetup)}) 
+      {
+        _id,
+        make {
+          make
+        },
+        model {
+          model
+        },
+        fuel {
+          fuel
+        },
+        generation,
+        price,
+        power,
+        year,
+        volume,
+        kms,
+        photos,
+        shortDescription,
+        date,     
+      }
+    }
+  `;
+  try {
+    const result = await Axios.post('http://localhost:8000/graphql', {
+      query: query,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const offers = result.data.data.filteredOffers;
     if (offers) return offers;
     else throw new Error(result.data.errors[0].message);
   } catch (error) {

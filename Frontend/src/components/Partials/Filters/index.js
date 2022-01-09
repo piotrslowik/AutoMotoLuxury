@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import offersActions from '../../../store/actions/offers';
+import parametersActions from '../../../store/actions/parameters';
+
 import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -7,8 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { getFuels } from '../../../logic/graphql/fuel';
 import { getOrigins } from '../../../logic/graphql/origin';
 import { getMakes } from '../../../logic/graphql/make';
-
-import parametersActions from '../../../store/actions/parameters';
+import { getFilteredOffers } from '../../../logic/graphql/offer';
 
 import { AccordionDetails, AccordionSummary as MuiAccordionSummary , Typography, Grid, TextField, Button, Accordion, Icon, Box, Tooltip } from '@mui/material';
 
@@ -106,6 +108,26 @@ const Filters = () => {
     }
   }
 
+  const handleFilters = async () => {
+    const filterSetup = getFilterSetup();
+    const result = await getFilteredOffers(filterSetup);
+    dispatch(offersActions.setOffers(result));
+  }
+  const getFilterSetup = () => {
+    const result = {};
+    if (fuel !== dummyObj.id) result.fuel = fuel;
+    if (origin !== dummyObj.id) result.origin = origin;
+    if (make !== dummyObj.id) result.make = make;
+    if (model !== dummyObj.id) result.model = model;
+    if (kmsMin !== '') result.kmsMin = parseInt(kmsMin);
+    if (kmsMax !== '') result.kmsMax = parseInt(kmsMax);
+    if (priceMin !== '') result.priceMin = parseInt(priceMin);
+    if (priceMax !== '') result.priceMax = parseInt(priceMax);
+    if (yearMin !== '') result.yearMin = parseInt(yearMin);
+    if (yearMax !== '') result.yearMax = parseInt(yearMax);
+    return result;
+  }
+
   const resetFilters = () => {
     setModels([]);
     setFuel(dummyObj.id);
@@ -118,6 +140,7 @@ const Filters = () => {
     setPriceMax('');
     setYearMin('');
     setYearMax('');
+    handleFilters();
   }
 
   const currentYear = new Date().getFullYear();
@@ -276,6 +299,7 @@ const Filters = () => {
                 variant="contained"
                 size="large"
                 sx={{ flexGrow: 1 }}
+                onClick={handleFilters}
               >
                 Filtruj
               </Button>

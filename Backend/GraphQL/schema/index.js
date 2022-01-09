@@ -35,6 +35,18 @@ export default buildSchema(`
     date: String!,
     creator: String,
   }
+  input FilterSetup {
+    fuel: ID,
+    model: ID,
+    make: ID,
+    origin: ID,
+    kmsMin: Int,
+    kmsMax: Int,
+    priceMin: Int,
+    priceMax: Int,
+    yearMin: Int,
+    yearMax: Int,
+  }
 
   type User {
     _id: ID!,
@@ -128,6 +140,7 @@ export default buildSchema(`
     offers: [Offer!]!
     offerDetails(offerId: ID!): Offer!
     offersOfId(offersIds: [ID!]!): [Offer!]!
+    filteredOffers(filterSetup: FilterSetup!): [Offer!]!
     makes: [Make!]!
     models(makeId: ID!): [Model!]!
     fuels: [Fuel!]!
