@@ -3,7 +3,6 @@
 .ImagesList {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     
     &__image-wrapper {
         width: 90%;
@@ -39,5 +38,5 @@
 }
 
 .ImagesList__delete-image:hover ~ .ImagesList__image {
-    filter: blur(4px) brightness(.6);
+    filter: blur(2px) brightness(.7);
 }

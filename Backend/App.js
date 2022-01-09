@@ -11,6 +11,8 @@ import graphqlResolvers from './GraphQL/resolvers/index.js';
 
 import uploadRouter from './Routers/upload.js';
 
+import auth from './Middleware/auth.js';
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -24,6 +26,8 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.use(auth);
   
 app.use('/graphql', graphqlHTTP({
   schema: graphqlSchema,

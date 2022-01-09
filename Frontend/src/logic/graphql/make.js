@@ -53,6 +53,7 @@ export const deleteMake = async makeId => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się usunąć marki');
     }
 }
 
@@ -82,6 +83,7 @@ export const addMake = async (make, originId) => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się dodać marki');
     }
 }
 
@@ -113,5 +115,6 @@ export const editMake = async (data = {make: '', originId: '', makeId: ''}) => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się edytować marki');
     }
 }

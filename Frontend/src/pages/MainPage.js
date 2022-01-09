@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import Header from '../components/Partials/Header';
 import Body from '../components/Partials/Body';
-import Footer from '../components/Partials/Footer';
+import Filters from '../components/Partials/Filters';
+
+import { Grid } from '@mui/material';
 
 const MainPage = () => {
-
-  const [filterSetup, setFilterSetup] = useState({});
-
-  const handleFilter = obj => {
-    setFilterSetup(obj);
-  }
-
   return (
-    <div className="App flex-column-center">
-        <Header onFilter={handleFilter} onShowModal={() => this.showModal('AddCar')}/>
-        <Body filterSetup={filterSetup} />
-        <Footer />
-    </div>
+    <Grid container spacing={4}>
+      <Grid item xs={12} lg={4}>
+        <Filters />
+      </Grid>
+      <Grid item xs={12} lg={8}>
+        <Body />
+      </Grid>
+    </Grid>
   );
 }
 

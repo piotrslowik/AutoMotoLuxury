@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, Box } from '@mui/material';
 
 const Logo = () => {
     return (
-        <Link to="/" className="Logo-link">
-            <div className="Logo">
+        <Link href="/" className="Logo-link">
+            <Box className="Logo" sx={{ color: 'secondary.light' }}>
                 <p>Auto-Moto</p>
                 <p className="luxury">LUXURY</p>
-            </div>
+            </Box>
         </Link>
     )
 }

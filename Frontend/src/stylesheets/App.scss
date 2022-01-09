@@ -3,7 +3,23 @@
 @import "~react-image-gallery/styles/scss/image-gallery.scss";
 
 body {
-  background-color: $dark-grey;
+  &::-webkit-scrollbar {
+    width: 0.4em;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0,0,20, .25);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #8A8A91;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+a {
+  text-decoration: none !important;
+  color: unset;
 }
 .App {
   min-height: 100vh;
@@ -14,44 +30,32 @@ body {
   flex-direction: column;
   align-items: center;
 }
+// fixing gallery slider
+.image-gallery-slide {
+  background: rgba($color: #FFF, $alpha: .2);
 
-@import "../pages/Error404/styles.scss";
-@import "../pages/NewOffer/styles.scss";
-@import "../pages/Offer/styles.scss";
+  .image-gallery-image {
+    img {
+      max-height: 360px;
+      @media (min-width: 600px) {
+        max-height: 420px;
+      }
+      @media (min-width: $tablet) {
+        max-height: 487px;
+      }
+      width: auto;
+      display: block;
+      margin: auto;
+    }
+  }
+}
 
-@import "../components/Modals/styles.scss";
-@import "../components/Modals/AddCar/styles.scss";
-@import "../components/Modals/Confirm/styles.scss";
-@import "../components/Modals/Login/styles.scss";
-@import "../components/Modals/OfferCard/styles.scss";
-@import "../components/Modals/Register/styles.scss";
-
-@import "../components//Modals/Admin/styles.scss";
-@import "../components/Modals/Admin/Fuel/styles.scss";
-@import "../components/Modals/Admin/Origin/styles.scss";
-@import "../components/Modals/Admin/Make/styles.scss";
-@import "../components/Modals/Admin/Model/styles.scss";
-
-@import "../components/Partials/Body/styles.scss";
-@import "../components/Partials/Filters/styles.scss";
-@import "../components/Partials/Footer/styles.scss";
-@import "../components/Partials/Header/styles.scss";
 @import "../components//Partials//ImagesInput/styles.scss";
 
-@import "../components/Shared/Fields/Button/styles.scss";
 @import "../components/Shared/Fields/Label/styles.scss";
 @import "../components/Shared/Fields/LabelledInput/styles.scss";
-@import "../components/Shared/Fields/LabelledSelect/styles.scss";
-@import "../components/Shared/Fields/Range/styles.scss";
-@import "../components/Shared/Fields/Textarea/styles.scss";
-@import "../components/Shared/Fields/ThirdPartyRegisterButton/styles.scss";
 
-@import "../components/Shared/AddRecord/styles.scss";
-@import "../components/Shared/EditableRecord/styles.scss";
-@import "../components/Shared/EditableTable/styles.scss";
-@import "../components/Shared/EditRecord/styles.scss";
 @import "../components/Shared/OfferCard/styles.scss";
 @import "../components/Shared/Loader/styles.scss";
 @import "../components/Shared/Logo/styles.scss";
-@import "../components/Shared/Picker/styles.scss";
 @import "../components//Shared/ImagesList/styles.scss";
