@@ -1,25 +1,5 @@
 @import '../../../stylesheets/variables.scss';
 
-// .OfferCard {
-//     width: 100%;
-//     height: 100px;
-//     @media (min-width: $tablet) {
-//         height: 150px;
-//     }
-//     @media (min-width: $desktop) {
-//         height: 200px;
-//     }
-//     background: $light-grey;
-//     display: flex;
-//     cursor: default;
-//     transition: filter .3s;
-
-//     &-Link {
-//         text-decoration: none;
-//         color: unset;
-//     }
-// }
-
 @media (min-width: $desktop) {
   .OfferCard:hover {
     box-sizing: 4px 4px 12px black;
