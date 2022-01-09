@@ -49,6 +49,7 @@ export const deleteFuel = async fuelId => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się usunąć paliwa');
     }
 }
 
@@ -74,6 +75,7 @@ export const addFuel = async fuel => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się dodać paliwa');
     }
 }
 
@@ -100,5 +102,6 @@ export const editFuel = async (fuel, fuelId) => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się edytować paliwa');
     }
 }

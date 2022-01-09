@@ -1,20 +1,55 @@
 import React from 'react';
 
-import Logo from '../../components/Shared/Logo';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const Error404 = () => {
-    return (
-        <div className="Error404">
-            <div className="Error404__back">
-                <Logo />
-                <h3>Powrót</h3>
-            </div>
-            <div className="Error404__text">
-                <h1>404</h1>
-                <h2>Page not found</h2>
-            </div>
-        </div>
-    )
+  return (
+    <Box>
+      <Typography
+        sx={{
+          color: 'primary.dark',
+          fontWeight: 900,
+          fontSize: {
+            xs: '9em',
+            md: '15em',
+            xl: '20em',
+          },
+          zIndex: 1,
+          textShadow: '0px 0px 50px white'
+        }}
+      >
+        404
+      </Typography>
+      <Typography
+        sx={{
+          color: 'primary.light',
+          fontWeight: 900,
+          fontSize: {
+            xs: '2em',
+            md: '3em',
+            xl: '5em',
+          },
+          position: 'absolute',
+          top: '20%',
+          zIndex: 1,
+          textShadow: '1px 1px 10px black'
+        }}
+      >
+        Strona miała kraksę...
+      </Typography>
+      <img
+        src="/404.png"
+        style={{
+          position: 'absolute',
+          top: '20vh',
+          right: '10px',
+          width: '70%',
+        }}
+        alt='Broken car'
+      />
+    </Box>
+  )
 }
 
 export default Error404;

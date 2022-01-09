@@ -50,6 +50,7 @@ export const deleteOrigin = async originId => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się usunąć pochodzenia');
     }
 }
 
@@ -75,6 +76,7 @@ export const addOrigin = async origin => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się dodać pochodzenia');
     }
 }
 
@@ -101,5 +103,6 @@ export const editOrigin = async (origin, originId) => {
     }
     catch (error) {
         console.error(error);
+        throw new Error('Nie udało się edytować pochodzenia');
     }
 }

@@ -1,143 +1,181 @@
 import { buildSchema } from 'graphql';
 
 export default buildSchema(`
-    type Offer {
-        _id: ID!,
-        make: Make!,
-        model: Model!,
-        generation: String,
-        fuel: Fuel,
-        year: Int!,
-        kms: Int!,
-        volume: Int!,
-        power: Int!
-        price: Int!,
-        shortDescription: String!,
-        longDescription: String!,
-        photos: [String!]!,
-        date: String!,
-        creator: User,
-    }
-    input OfferInput {
-        make: String!,
-        model: String!,
-        generation: String,
-        fuel: String,
-        year: Int!,
-        kms: Int!,
-        volume: Int!,
-        power: Int!
-        price: Int!,
-        shortDescription: String!,
-        longDescription: String!,
-        photos: [String!]!,
-        date: String!,
-        creator: String,
-    }
+  type Offer {
+    _id: ID!,
+    make: Make!,
+    model: Model!,
+    generation: String,
+    fuel: Fuel,
+    year: Int!,
+    kms: Int!,
+    volume: Int!,
+    power: Int!
+    price: Int!,
+    shortDescription: String!,
+    longDescription: String!,
+    photos: [String!]!,
+    date: String!,
+    creator: User,
+    isDeleted: Boolean,
+  }
+  input OfferInput {
+    make: String!,
+    model: String!,
+    generation: String,
+    fuel: String,
+    year: Int!,
+    kms: Int!,
+    volume: Int!,
+    power: Int!
+    price: Int!,
+    shortDescription: String!,
+    longDescription: String!,
+    photos: [String!]!,
+    date: String!,
+    creator: String,
+  }
+  input FilterSetup {
+    fuel: ID,
+    model: ID,
+    make: ID,
+    origin: ID,
+    kmsMin: Int,
+    kmsMax: Int,
+    priceMin: Int,
+    priceMax: Int,
+    yearMin: Int,
+    yearMax: Int,
+  }
 
-    type User {
-        _id: ID!,
-        email: String!,
-        password: String,
-        createdOffers: [Offer!],
-    } 
-    input UserInput {
-        email: String!,
-        password: String!,
-    }
-    input UserEditInput {
-        email: String,
-        password: String,
-        id: ID!,
-    }
+  type User {
+    _id: ID!,
+    email: String!,
+    password: String!,
+    createdOffers: [Offer!],
+    observedOffers: [Offer!],
+    isDeleted: Boolean,
+    isAdmin: Boolean,
+  } 
+  input UserInput {
+    email: String!,
+    password: String!,
+  }
+  input UserEditInput {
+    email: String,
+    password: String,
+    userId: ID!,
+    isAdmin: Boolean,
+  }
+  input FavoritesInput {
+    userId: ID!,
+    offerId: ID!,
+  }
 
-    type Origin {
-        _id: ID!,
-        origin: String!,
-    }
-    input OriginInput {
-        origin: String!,
-    }
-    input OriginEditInput {
-        origin: String!,
-        id: ID!,
-    }
+  type Origin {
+    _id: ID!,
+    origin: String!,
+    isDeleted: Boolean
+  }
+  input OriginInput {
+    origin: String!,
+  }
+  input OriginEditInput {
+    origin: String!,
+    id: ID!,
+  }
 
-    type Make {
-        _id: ID!,
-        make: String!,
-        origin: Origin!,
-    }
-    input MakeInput {
-        make: String!,
-        originId: ID!,
-    }
-    input MakeEditInput {
-        make: String,
-        originId: ID,
-        makeId: ID!,
-    }
+  type Make {
+    _id: ID!,
+    make: String!,
+    origin: Origin!,
+    isDeleted: Boolean
+  }
+  input MakeInput {
+    make: String!,
+    originId: ID!,
+  }
+  input MakeEditInput {
+    make: String,
+    originId: ID,
+    makeId: ID!,
+  }
 
-    type Model {
-        _id: ID!,
-        model: String!,
-        make: Make!,
-    }
-    input ModelInput {
-        model: String!,
-        makeId: ID!,
-    }
-    input ModelEditInput {
-        model: String,
-        makeId: ID,
-        modelId: ID!,
-    }
+  type Model {
+    _id: ID!,
+    model: String!,
+    make: Make!,
+    isDeleted: Boolean
+  }
+  input ModelInput {
+    model: String!,
+    makeId: ID!,
+  }
+  input ModelEditInput {
+    model: String,
+    makeId: ID,
+    modelId: ID!,
+  }
 
-    type Fuel {
-        _id: ID!,
-        fuel: String!,
-    }
-    input FuelInput {
-        fuel: String!,
-    }
-    input FuelEditInput {
-        fuel: String!,
-        id: ID!,
-    }
+  type Fuel {
+    _id: ID!,
+    fuel: String!,
+    isDeleted: Boolean
+  }
+  input FuelInput {
+    fuel: String!,
+  }
+  input FuelEditInput {
+    fuel: String!,
+    id: ID!,
+  }
 
-    type RootQuery {
-        offers: [Offer!]!
-        offerDetails(offerId: ID!): Offer!
-        makes: [Make!]!
-        models(makeId: ID!): [Model!]!
-        fuels: [Fuel!]!
-        origins: [Origin!]!
-    }
-    type RootMutation {
-        createOffer(offerInput: OfferInput): Offer
-        deleteOffer(offerId: ID!): Model
+  type AuthData {
+    user: User!,
+    token: String!,
+    tokenExpiration: Int!,
+  }
 
-        createUser(userInput: UserInput): User
+  type RootQuery {
+    offers: [Offer!]!
+    offerDetails(offerId: ID!): Offer!
+    offersOfId(offersIds: [ID!]!): [Offer!]!
+    filteredOffers(filterSetup: FilterSetup!): [Offer!]!
+    makes: [Make!]!
+    models(makeId: ID!): [Model!]!
+    fuels: [Fuel!]!
+    origins: [Origin!]!
+    login(email: String!, password: String!): AuthData
+    users: [User]!
+  }
+  type RootMutation {
+    createOffer(offerInput: OfferInput): Offer
+    deleteOffer(offerId: ID!): Offer
 
-        createOrigin(originInput: OriginInput): Origin
-        editOrigin(originEditInput: OriginEditInput): Origin
-        deleteOrigin(originId: ID!): Origin
+    createUser(userInput: UserInput): User
+    editUser(userEditInput: UserEditInput): User
+    changeRole(userEditInput: UserEditInput): User
+    toggleFavoriteOffer(favoritesInput: FavoritesInput): User
 
-        createFuel(fuelInput: FuelInput): Fuel
-        editFuel(fuelEditInput: FuelEditInput): Fuel
-        deleteFuel(fuelId: ID!): Fuel
+    createOrigin(originInput: OriginInput): Origin
+    editOrigin(originEditInput: OriginEditInput): Origin
+    deleteOrigin(originId: ID!): Origin
 
-        createMake(makeInput: MakeInput): Make
-        editMake(makeEditInput: MakeEditInput): Make
-        deleteMake(makeId: ID!): Make
+    createFuel(fuelInput: FuelInput): Fuel
+    editFuel(fuelEditInput: FuelEditInput): Fuel
+    deleteFuel(fuelId: ID!): Fuel
 
-        createModel(modelInput: ModelInput): Model
-        editModel(modelEditInput: ModelEditInput): Model
-        deleteModel(modelId: ID!): Model
-    }
+    createMake(makeInput: MakeInput): Make
+    editMake(makeEditInput: MakeEditInput): Make
+    deleteMake(makeId: ID!): Make
 
-    schema {
-        query: RootQuery
-        mutation: RootMutation
-    }
+    createModel(modelInput: ModelInput): Model
+    editModel(modelEditInput: ModelEditInput): Model
+    deleteModel(modelId: ID!): Model
+  }
+
+  schema {
+    query: RootQuery
+    mutation: RootMutation
+  }
 `)

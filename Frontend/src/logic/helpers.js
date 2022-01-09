@@ -18,6 +18,14 @@ export const isObjectEmpty = obj => {
 export const arrayToGraphQLString = array => {
     return array.map(el => `"${el}"`);
 }
+export const objectToGraphQLString = obj => {
+  let result = '';
+  Object.entries(obj).forEach(entry => {
+    const [key, value] = entry;
+    result += `${key}: ${typeof value === 'number' ? value : `"${value}"`}`;
+  });
+  return `{${result}}`;
+}
 export const formatNumber = number => {
     let spaceIterator = 0;
     let string = number.toString();
