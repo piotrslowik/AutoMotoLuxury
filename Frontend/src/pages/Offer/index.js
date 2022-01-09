@@ -96,7 +96,13 @@ const Offer = (props) => {
   return (
     <Grid container spacing={4}>
     {isLoading
-    ? <Loader text="Pobieranie danych" />
+    ? <React.Fragment>
+        <Grid item xs={1} sm={2} md={3} />
+        <Grid item xs={10} sm={8} md={6}>
+          <Loader text="Pobieranie danych" />  
+        </Grid>     
+        <Grid item xs={1} sm={2} md={3} />
+      </React.Fragment>
     : <React.Fragment>
         <Grid item xs={12} md={7}>
           <ImageGallery items={images} showPlayButton={false} thumbnailPosition="left" />
