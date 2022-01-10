@@ -1,13 +1,12 @@
 {
   "name": "auto_moto_luxury",
   "version": "0.9.0",
-  "private": true,
+  "engines": {
+    "node": "15.8.0"
+  },
   "scripts": {
     "frontend": "cd Frontend && npm run start",
     "backend": "cd Backend && npm run start",
-    "heroku-postbuild": "cd Backend && npm install && npm run build && cd ../Frontend && npm install && npm run build"
-  },
-  "engines": {
-    "node": "15.8.0"
+    "heroku-prebuild": "cd Backend && npm install && npm run build && cd ../Frontend && npm install && npm run build"
   }
 }
