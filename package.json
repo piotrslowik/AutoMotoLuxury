@@ -6,5 +6,8 @@
     "frontend": "cd Frontend && npm run start",
     "backend": "cd Backend && npm run start",
     "heroku-postbuild": "cd Frontend && npm install && npm run build && cd ../Backend && npm install && npm run build"
+  },
+  "engines": {
+    "node": "15.8.0"
   }
 }
